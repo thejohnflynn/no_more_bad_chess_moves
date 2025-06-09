@@ -15,12 +15,12 @@ canvas = None
 status_label = None
 log_text_widget = None
 highlight_squares = []
-flip_board = False  # If True, display from Black's perspective
+flip_board = False  # display from Black's perspective
 
 STOCKFISH_PATH = "/opt/homebrew/bin/stockfish"
 POSITIONS_FILE = "positions.txt"
-ENGINE_TIME_LIMIT = 0.5  # Seconds
-TOP_N = 3  # Number of top engine moves to display
+ENGINE_TIME_LIMIT = 0.5
+TOP_N = 3
 DARK_COLOR = "#669966"
 LIGHT_COLOR = "#99CC99"
 
@@ -31,7 +31,7 @@ def load_positions():
         with open(POSITIONS_FILE) as f:
             positions = [line.strip() for line in f if line.strip()]
     else:
-        positions = [""]  # empty = start position
+        positions = [""]
     random.shuffle(positions)
 
 
@@ -63,12 +63,8 @@ def display_top_lines(board, top_moves):
                 break
             san_line.append(temp_board.san(m))
             temp_board.push(m)
-        if san_line:
-            first_san = san_line[0]
-            continuation = " ".join(san_line)
-        else:
-            first_san = ""
-            continuation = ""
+        first_san = san_line[0] if san_line else ""
+        continuation = " ".join(san_line) if san_line else ""
         log_message(f"Top {i+1}: {first_san} (score={sc:.2f}) ({continuation})")
 
 
@@ -85,12 +81,14 @@ def determine_diff_rank(move, top_moves, player_score):
     if move == first_moves[0]:
         return 0.0, "Top 1"
     diff = player_score - best_score
-    rank_num = next(
-        (i + 1 for i, mv in enumerate(first_moves) if mv == move),
-        None,
-    )
+    rank_num = next((i + 1 for i, mv in enumerate(first_moves) if mv == move), None)
     rank = f"Top {rank_num}" if rank_num else ""
     return diff, rank
+
+
+def evaluate_position(board):
+    info = engine.analyse(board, chess.engine.Limit(time=ENGINE_TIME_LIMIT))
+    return info["score"].white().score(mate_score=10000) / 100
 
 
 def lighten_hex_color(hex_color, factor=0.2):
@@ -169,6 +167,8 @@ def process_move(move):
     board.push(move)
     update_display()
     announce_board_state()
+    eval_val = evaluate_position(board)
+    log_message(f"Evaluation: {eval_val:.2f}")
     stockfish_move()
 
 
@@ -186,6 +186,8 @@ def stockfish_move():
     update_display()
     log_message(f"Engine plays: {mv_san}")
     announce_board_state()
+    eval_val = evaluate_position(board)
+    log_message(f"Evaluation: {eval_val:.2f}")
 
 
 def announce_board_state():
@@ -213,6 +215,8 @@ def next_position():
     highlight_squares.clear()
     log_text_widget.delete("1.0", "end")
     update_display()
+    eval_val = evaluate_position(board)
+    log_message(f"Evaluation: {eval_val:.2f}")
 
 
 def init_main_window():
@@ -220,8 +224,9 @@ def init_main_window():
     root.title("mychess")
     btn_frame = tk.Frame(root)
     btn_frame.pack(side="top", fill="x")
-    next_btn = tk.Button(btn_frame, text="Next Position", command=next_position)
-    next_btn.pack(padx=5, pady=5)
+    tk.Button(btn_frame, text="Next Position", command=next_position).pack(
+        padx=5, pady=5
+    )
     c = tk.Canvas(root, width=480, height=480)
     c.pack()
     c.bind("<Button-1>", on_board_click)
@@ -238,9 +243,9 @@ def main():
     global engine, board, positions, canvas, status_label, log_text_widget, position_idx, flip_board, selected_square
     load_positions()
     engine = chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH)
-    posit = positions[position_idx]
+    fen = positions[position_idx]
     try:
-        board = chess.Board(posit) if posit else chess.Board()
+        board = chess.Board(fen) if fen else chess.Board()
     except:
         log_message("Invalid FEN; using start position.")
         board = chess.Board()
@@ -248,6 +253,8 @@ def main():
     selected_square = None
     canvas, status_label, log_text_widget = init_main_window()
     update_display()
+    eval_val = evaluate_position(board)
+    log_message(f"Evaluation: {eval_val:.2f}")
     root.update_idletasks()
     root.deiconify()
     root.attributes("-topmost", True)
