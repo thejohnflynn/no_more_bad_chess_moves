@@ -3,19 +3,24 @@ import chess.engine
 import os
 import yaml
 import random
+import math
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
 
 root = tk.Tk()
+root.geometry("1000x700")
+# Allow window resizing
+root.resizable(True, True)
 engine = None
 board = None
 positions = []
 position_idx = 0
 canvas = None
+eval_canvas = None
 status_label = None
 log_text_widget = None
 highlight_squares = []
-flip_board = False  # display from Black's perspective
+flip_board = False
 
 STOCKFISH_PATH = "/opt/homebrew/bin/stockfish"
 POSITIONS_FILE = "positions.txt"
@@ -44,7 +49,9 @@ def log_message(msg: str):
 
 def get_top_moves(board):
     infos = engine.analyse(
-        board, chess.engine.Limit(time=ENGINE_TIME_LIMIT), multipv=TOP_N
+        board,
+        chess.engine.Limit(time=ENGINE_TIME_LIMIT),
+        multipv=TOP_N
     )
     top_moves = []
     for info in infos:
@@ -81,7 +88,7 @@ def determine_diff_rank(move, top_moves, player_score):
     if move == first_moves[0]:
         return 0.0, "Top 1"
     diff = player_score - best_score
-    rank_num = next((i + 1 for i, mv in enumerate(first_moves) if mv == move), None)
+    rank_num = next((i+1 for i, mv in enumerate(first_moves) if mv == move), None)
     rank = f"Top {rank_num}" if rank_num else ""
     return diff, rank
 
@@ -91,41 +98,63 @@ def evaluate_position(board):
     return info["score"].white().score(mate_score=10000) / 100
 
 
+def draw_eval_bar(val):
+    eval_canvas.delete("all")
+    h = 480
+    w = 30
+    C = 2.0
+    # Transfer curve (atan) normalized to [-1,1]
+    n = math.atan(val / C) / (math.pi / 2)
+    # Compute position
+    y = (1 - n) / 2 * h
+    # Invert if board flipped
+    if flip_board:
+        y = h - y
+    # Draw segments: bottom matches side at bottom of board
+    if not flip_board:
+        # White at bottom: bottom white, top black
+        eval_canvas.create_rectangle(0, 0, w, y, fill="black", outline="")
+        eval_canvas.create_rectangle(0, y, w, h, fill="white", outline="")
+    else:
+        # Black at bottom: bottom black, top white
+        eval_canvas.create_rectangle(0, 0, w, y, fill="white", outline="")
+        eval_canvas.create_rectangle(0, y, w, h, fill="black", outline="")
+    # Print evaluation below bar
+    eval_canvas.create_text(
+        w / 2 + 2,
+        h - 7,
+        text=f"{val:.2f}",
+        font=("Arial", 9),
+        fill="#888888"
+    )
+
 def lighten_hex_color(hex_color, factor=0.2):
     hex_color = hex_color.lstrip("#")
-    r, g, b = int(hex_color[0:2], 16), int(hex_color[2:4], 16), int(hex_color[4:6], 16)
-    r = min(int(r + (255 - r) * factor), 255)
-    g = min(int(g + (255 - g) * factor), 255)
-    b = min(int(b + (255 - b) * factor), 255)
+    r, g, b = int(hex_color[0:2],16), int(hex_color[2:4],16), int(hex_color[4:6],16)
+    r = min(int(r + (255-r)*factor), 255)
+    g = min(int(g + (255-g)*factor), 255)
+    b = min(int(b + (255-b)*factor), 255)
     return f"#{r:02x}{g:02x}{b:02x}"
 
 
 def get_base_square_color(row, col):
-    return DARK_COLOR if (row + col) % 2 == 0 else LIGHT_COLOR
+    return DARK_COLOR if (row+col)%2==0 else LIGHT_COLOR
 
 
 def draw_board():
-    symbol_map = {
-        **{p: s for p, s in zip("prnbqk", "♟♜♞♝♛♚")},
-        **{p.upper(): s for p, s in zip("prnbqk", "♟♜♞♝♛♚")},
-    }
-    for row in range(8):
-        for col in range(8):
-            sq = (
-                chess.square(7 - col, row) if flip_board else chess.square(col, 7 - row)
-            )
-            base = get_base_square_color(row, col)
+    symbol_map = {**{p:s for p,s in zip("prnbqk","♟♜♞♝♛♚")}, **{p.upper():s for p,s in zip("prnbqk","♟♜♞♝♛♚")}}
+    for r in range(8):
+        for c in range(8):
+            sq = chess.square(7-c, r) if flip_board else chess.square(c,7-r)
+            base = get_base_square_color(r,c)
             color = lighten_hex_color(base) if sq in highlight_squares else base
-            x0, y0 = col * 60, row * 60
-            x1, y1 = x0 + 60, y0 + 60
-            canvas.create_rectangle(x0, y0, x1, y1, fill=color, outline=color)
-            piece = board.piece_at(sq)
-            if piece:
-                symbol = symbol_map[piece.symbol()]
-                fill_col = "white" if piece.symbol().isupper() else "black"
-                canvas.create_text(
-                    x0 + 30, y0 + 30, text=symbol, font=("Arial", 58), fill=fill_col
-                )
+            x0,y0=c*60,r*60; x1,y1=x0+60,y0+60
+            canvas.create_rectangle(x0,y0,x1,y1,fill=color,outline=color)
+            p = board.piece_at(sq)
+            if p:
+                symbol = symbol_map[p.symbol()]
+                fill_col = 'white' if p.symbol().isupper() else 'black'
+                canvas.create_text(x0+30,y0+30,text=symbol,font=("Arial",58),fill=fill_col)
 
 
 def update_display():
@@ -135,132 +164,86 @@ def update_display():
 
 def on_board_click(event):
     global selected_square
-    col, row = event.x // 60, event.y // 60
-    sq = chess.square(7 - col, row) if flip_board else chess.square(col, 7 - row)
+    c,r=event.x//60,event.y//60
+    sq=chess.square(7-c,r) if flip_board else chess.square(c,7-r)
     if selected_square is None:
-        if board.piece_at(sq):
-            selected_square = sq
-            highlight_squares.clear()
-            highlight_squares.append(sq)
+        if board.piece_at(sq): selected_square=sq; highlight_squares.clear(); highlight_squares.append(sq)
     else:
-        mv = chess.Move(selected_square, sq)
-        highlight_squares.clear()
-        highlight_squares.extend([selected_square, sq])
-        if mv in board.legal_moves:
-            process_move(mv)
-        selected_square = None
+        mv=chess.Move(selected_square,sq)
+        highlight_squares.clear(); highlight_squares.extend([selected_square,sq])
+        if mv in board.legal_moves: process_move(mv)
+        selected_square=None
     update_display()
 
 
 def process_move(move):
-    top_moves = get_top_moves(board)
-    display_top_lines(board, top_moves)
-    player_score = evaluate_move(board, move)
-    diff, rank = determine_diff_rank(move, top_moves, player_score)
-    your_san = board.san(move)
-    msg = (
-        f"Your move: {rank}: {your_san} (score={player_score:.2f}, diff={diff:.2f})"
-        if rank
-        else f"Your move: {your_san} (score={player_score:.2f}, diff={diff:.2f})"
-    )
+    top_moves=get_top_moves(board)
+    display_top_lines(board,top_moves)
+    player_score=evaluate_move(board,move)
+    diff,rank=determine_diff_rank(move,top_moves,player_score)
+    san=board.san(move)
+    msg=(f"Your move: {rank}: {san} (score={player_score:.2f}, diff={diff:.2f})" if rank else f"Your move: {san} (score={player_score:.2f}, diff={diff:.2f})")
     log_message(msg)
-    board.push(move)
-    update_display()
-    announce_board_state()
-    eval_val = evaluate_position(board)
-    log_message(f"Evaluation: {eval_val:.2f}")
+    board.push(move); update_display(); announce_board_state()
+    ev=evaluate_position(board); log_message(f"Evaluation: {ev:.2f}"); draw_eval_bar(ev)
     stockfish_move()
 
 
 def stockfish_move():
     global highlight_squares
-    if board.is_game_over():
-        log_message("Game over.")
-        return
-    res = engine.play(board, chess.engine.Limit(time=ENGINE_TIME_LIMIT))
-    mv = res.move
-    mv_san = board.san(mv)
-    highlight_squares.clear()
-    highlight_squares.extend([mv.from_square, mv.to_square])
-    board.push(mv)
-    update_display()
-    log_message(f"Engine plays: {mv_san}")
-    announce_board_state()
-    eval_val = evaluate_position(board)
-    log_message(f"Evaluation: {eval_val:.2f}")
+    if board.is_game_over(): log_message("Game over."); return
+    res=engine.play(board,chess.engine.Limit(time=ENGINE_TIME_LIMIT))
+    mv=res.move; mv_san=board.san(mv)
+    highlight_squares.clear(); highlight_squares.extend([mv.from_square,mv.to_square])
+    board.push(mv); update_display(); log_message(f"Engine plays: {mv_san}"); announce_board_state()
+    ev=evaluate_position(board); log_message(f"Evaluation: {ev:.2f}"); draw_eval_bar(ev)
 
 
 def announce_board_state():
-    if board.is_checkmate():
-        log_message("Checkmate! Game Over.")
-    elif board.is_stalemate():
-        log_message("Stalemate! Game Over.")
-    elif board.is_insufficient_material():
-        log_message("Draw (insufficient material). Game Over.")
-    elif board.is_check():
-        log_message("Check!")
+    if board.is_checkmate(): log_message("Checkmate! Game Over.")
+    elif board.is_stalemate(): log_message("Stalemate! Game Over.")
+    elif board.is_insufficient_material(): log_message("Draw (insufficient material). Game Over.")
+    elif board.is_check(): log_message("Check!")
 
 
 def next_position():
-    global position_idx, board, flip_board, selected_square, highlight_squares
-    position_idx = (position_idx + 1) % len(positions)
-    fen = positions[position_idx]
-    try:
-        board = chess.Board(fen) if fen else chess.Board()
-    except:
-        log_message("Invalid FEN; using start position.")
-        board = chess.Board()
-    flip_board = not board.turn
-    selected_square = None
-    highlight_squares.clear()
-    log_text_widget.delete("1.0", "end")
-    update_display()
-    eval_val = evaluate_position(board)
-    log_message(f"Evaluation: {eval_val:.2f}")
+    global position_idx,board,flip_board,selected_square,highlight_squares
+    position_idx=(position_idx+1)%len(positions)
+    fen=positions[position_idx]
+    try: board=chess.Board(fen) if fen else chess.Board()
+    except: log_message("Invalid FEN; using start position."); board=chess.Board()
+    flip_board=not board.turn; selected_square=None; highlight_squares.clear()
+    log_text_widget.delete("1.0","end"); update_display()
+    ev=evaluate_position(board); log_message(f"Evaluation: {ev:.2f}"); draw_eval_bar(ev)
 
 
 def init_main_window():
-    global canvas, status_label, log_text_widget
+    global canvas,eval_canvas,status_label,log_text_widget
     root.title("mychess")
-    btn_frame = tk.Frame(root)
-    btn_frame.pack(side="top", fill="x")
-    tk.Button(btn_frame, text="Next Position", command=next_position).pack(
-        padx=5, pady=5
-    )
-    c = tk.Canvas(root, width=480, height=480)
-    c.pack()
-    c.bind("<Button-1>", on_board_click)
-    st = tk.Label(root, text="", font=("Arial", 12), pady=3, anchor="w")
-    st.pack(side="bottom", fill="x")
-    frame = tk.Frame(root)
-    frame.pack(side="bottom", fill="both", expand=True)
-    txt = ScrolledText(frame, height=6, wrap="word")
-    txt.pack(side="left", fill="both", expand=True)
-    return c, st, txt
+    btn_frame=tk.Frame(root); btn_frame.pack(side="top",fill="x")
+    tk.Button(btn_frame,text="Next Position",command=next_position).pack(padx=5,pady=5)
+    frame=tk.Frame(root); frame.pack(side="top")
+    eval_canvas=tk.Canvas(frame,width=30,height=480); eval_canvas.pack(side="left")
+    canvas=tk.Canvas(frame,width=480,height=480); canvas.pack(side="left"); canvas.bind("<Button-1>",on_board_click)
+    status_label=tk.Label(root,text="",font=("Arial",12),pady=3,anchor="w"); status_label.pack(side="bottom",fill="x")
+    txt_frame=tk.Frame(root); txt_frame.pack(side="bottom",fill="both",expand=True)
+    log_text_widget=ScrolledText(txt_frame,height=6,wrap="word"); log_text_widget.pack(side="left",fill="both",expand=True)
+    return canvas,status_label,log_text_widget
 
 
 def main():
-    global engine, board, positions, canvas, status_label, log_text_widget, position_idx, flip_board, selected_square
+    global engine,board,positions,canvas,status_label,log_text_widget,position_idx,flip_board,selected_square
     load_positions()
-    engine = chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH)
-    fen = positions[position_idx]
-    try:
-        board = chess.Board(fen) if fen else chess.Board()
-    except:
-        log_message("Invalid FEN; using start position.")
-        board = chess.Board()
-    flip_board = not board.turn
-    selected_square = None
-    canvas, status_label, log_text_widget = init_main_window()
+    engine=chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH)
+    fen=positions[position_idx]
+    try: board=chess.Board(fen) if fen else chess.Board()
+    except: log_message("Invalid FEN; using start position."); board=chess.Board()
+    flip_board=not board.turn; selected_square=None
+    canvas,status_label,log_text_widget=init_main_window()
     update_display()
-    eval_val = evaluate_position(board)
-    log_message(f"Evaluation: {eval_val:.2f}")
-    root.update_idletasks()
-    root.deiconify()
-    root.attributes("-topmost", True)
-    root.mainloop()
-    engine.quit()
+    ev=evaluate_position(board); log_message(f"Evaluation: {ev:.2f}"); draw_eval_bar(ev)
+    root.update_idletasks(); root.deiconify(); root.attributes("-topmost",True)
+    root.mainloop(); engine.quit()
 
-
-if __name__ == "__main__":
+if __name__=="__main__":
     main()
