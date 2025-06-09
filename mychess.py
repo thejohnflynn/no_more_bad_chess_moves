@@ -2,6 +2,7 @@ import chess
 import chess.engine
 import os
 import yaml
+import random
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
 
@@ -16,11 +17,12 @@ log_text_widget = None
 highlight_squares = []
 flip_board = False  # If True, display from Black's perspective
 
-# Path to resources
 STOCKFISH_PATH = "/opt/homebrew/bin/stockfish"
 POSITIONS_FILE = "positions.txt"
 ENGINE_TIME_LIMIT = 0.5  # Seconds
 TOP_N = 3  # Number of top engine moves to display
+DARK_COLOR = "#669966"
+LIGHT_COLOR = "#99CC99"
 
 
 def load_positions():
@@ -30,6 +32,7 @@ def load_positions():
             positions = [line.strip() for line in f if line.strip()]
     else:
         positions = [""]  # empty = start position
+    random.shuffle(positions)
 
 
 def log_message(msg: str):
@@ -38,8 +41,57 @@ def log_message(msg: str):
         log_text_widget.insert("end", msg + "\n")
         log_text_widget.see("end")
 
-DARK_COLOR = "#669966"
-LIGHT_COLOR = "#99CC99"
+
+def get_top_moves(board):
+    infos = engine.analyse(
+        board, chess.engine.Limit(time=ENGINE_TIME_LIMIT), multipv=TOP_N
+    )
+    top_moves = []
+    for info in infos:
+        pv_list = info.get("pv", [])
+        score = info["score"].white().score(mate_score=10000) / 100
+        top_moves.append((pv_list, score))
+    return top_moves
+
+
+def display_top_lines(board, top_moves):
+    for i, (pv_list, sc) in enumerate(top_moves):
+        temp_board = board.copy()
+        san_line = []
+        for m in pv_list:
+            if m is None:
+                break
+            san_line.append(temp_board.san(m))
+            temp_board.push(m)
+        if san_line:
+            first_san = san_line[0]
+            continuation = " ".join(san_line)
+        else:
+            first_san = ""
+            continuation = ""
+        log_message(f"Top {i+1}: {first_san} (score={sc:.2f}) ({continuation})")
+
+
+def evaluate_move(board, move):
+    tmp = board.copy()
+    tmp.push(move)
+    info = engine.analyse(tmp, chess.engine.Limit(time=ENGINE_TIME_LIMIT))
+    return info["score"].white().score(mate_score=10000) / 100
+
+
+def determine_diff_rank(move, top_moves, player_score):
+    best_score = top_moves[0][1]
+    first_moves = [pv_list[0] for pv_list, _ in top_moves if pv_list]
+    if move == first_moves[0]:
+        return 0.0, "Top 1"
+    diff = player_score - best_score
+    rank_num = next(
+        (i + 1 for i, mv in enumerate(first_moves) if mv == move),
+        None,
+    )
+    rank = f"Top {rank_num}" if rank_num else ""
+    return diff, rank
+
 
 def lighten_hex_color(hex_color, factor=0.2):
     hex_color = hex_color.lstrip("#")
@@ -48,6 +100,7 @@ def lighten_hex_color(hex_color, factor=0.2):
     g = min(int(g + (255 - g) * factor), 255)
     b = min(int(b + (255 - b) * factor), 255)
     return f"#{r:02x}{g:02x}{b:02x}"
+
 
 def get_base_square_color(row, col):
     return DARK_COLOR if (row + col) % 2 == 0 else LIGHT_COLOR
@@ -60,10 +113,9 @@ def draw_board():
     }
     for row in range(8):
         for col in range(8):
-            if flip_board:
-                sq = chess.square(7 - col, row)
-            else:
-                sq = chess.square(col, 7 - row)
+            sq = (
+                chess.square(7 - col, row) if flip_board else chess.square(col, 7 - row)
+            )
             base = get_base_square_color(row, col)
             color = lighten_hex_color(base) if sq in highlight_squares else base
             x0, y0 = col * 60, row * 60
@@ -74,11 +126,7 @@ def draw_board():
                 symbol = symbol_map[piece.symbol()]
                 fill_col = "white" if piece.symbol().isupper() else "black"
                 canvas.create_text(
-                    x0 + 30,
-                    y0 + 30,
-                    text=symbol,
-                    font=("Arial", 58),
-                    fill=fill_col,
+                    x0 + 30, y0 + 30, text=symbol, font=("Arial", 58), fill=fill_col
                 )
 
 
@@ -90,10 +138,7 @@ def update_display():
 def on_board_click(event):
     global selected_square
     col, row = event.x // 60, event.y // 60
-    if flip_board:
-        sq = chess.square(7 - col, row)
-    else:
-        sq = chess.square(col, 7 - row)
+    sq = chess.square(7 - col, row) if flip_board else chess.square(col, 7 - row)
     if selected_square is None:
         if board.piece_at(sq):
             selected_square = sq
@@ -110,63 +155,16 @@ def on_board_click(event):
 
 
 def process_move(move):
-    # Multi-PV: gather top lines and display
-    infos = engine.analyse(
-        board, chess.engine.Limit(time=ENGINE_TIME_LIMIT), multipv=TOP_N
-    )
-    top_moves = []
-    for info in infos:
-        pv_list = info.get("pv", [])
-        score = info["score"].white().score(mate_score=10000) / 100
-        top_moves.append((pv_list, score))
-
-    # Display each top line with continuation in parentheses
-    for i, (pv_list, sc) in enumerate(top_moves):
-        # Build SAN continuation
-        san_line = []
-        temp_board = board.copy()
-        for m in pv_list:
-            if m is None:
-                break
-            san_line.append(temp_board.san(m))
-            temp_board.push(m)
-        if san_line:
-            first_san = san_line[0]
-            continuation = " ".join(san_line)
-        else:
-            first_san = ""
-            continuation = ""
-        log_message(f"Top {i+1}: {first_san} (score={sc:.2f}) ({continuation})")
-
-    best_score = top_moves[0][1]
-    # Evaluate player's move
-    tmp = board.copy()
-    tmp.push(move)
-    ps = (
-        engine.analyse(tmp, chess.engine.Limit(time=ENGINE_TIME_LIMIT))["score"]
-        .white()
-        .score(mate_score=10000)
-        / 100
-    )
-
-    # Determine diff & rank
-    first_moves = [pv_list[0] for pv_list, _ in top_moves if pv_list]
-    if move == first_moves[0]:
-        diff = 0.0
-        rank = "Top 1"
-    else:
-        diff = ps - best_score
-        rank_num = next(
-            (i + 1 for i, mv in enumerate(first_moves) if mv == move),
-            None,
-        )
-        rank = f"Top {rank_num}" if rank_num else ""
-
+    top_moves = get_top_moves(board)
+    display_top_lines(board, top_moves)
+    player_score = evaluate_move(board, move)
+    diff, rank = determine_diff_rank(move, top_moves, player_score)
     your_san = board.san(move)
-    if rank:
-        msg = f"Your move: {rank}: {your_san} (score={ps:.2f}, diff={diff:.2f})"
-    else:
-        msg = f"Your move: {your_san} (score={ps:.2f}, diff={diff:.2f})"
+    msg = (
+        f"Your move: {rank}: {your_san} (score={player_score:.2f}, diff={diff:.2f})"
+        if rank
+        else f"Your move: {your_san} (score={player_score:.2f}, diff={diff:.2f})"
+    )
     log_message(msg)
     board.push(move)
     update_display()
@@ -255,6 +253,7 @@ def main():
     root.attributes("-topmost", True)
     root.mainloop()
     engine.quit()
+
 
 if __name__ == "__main__":
     main()
