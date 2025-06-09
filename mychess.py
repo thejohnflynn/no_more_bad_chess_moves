@@ -146,9 +146,22 @@ def draw_board():
             p = board.piece_at(sq)
             if p:
                 symbol = symbol_map[p.symbol()]
-                fill_col = "white" if p.symbol().isupper() else "black"
+                fill_col = 'white' if p.symbol().isupper() else 'black'
+                # adjust piece icon size
+                size = 58
+                v_offset = 0
+                if p.piece_type in (chess.PAWN, chess.ROOK):
+                    size = int(58 * 0.9)
+                    v_offset = 2
+                elif p.piece_type in (chess.KING, chess.BISHOP):
+                    size = int(58 * 1.1)
+                    v_offset = -2
                 canvas.create_text(
-                    x0 + 30, y0 + 30, text=symbol, font=("Arial", 58), fill=fill_col
+                    x0 + 30,
+                    y0 + 30 + v_offset,
+                    text=symbol,
+                    font=("Arial", size),
+                    fill=fill_col,
                 )
 
 
@@ -214,7 +227,6 @@ def stockfish_move():
     log_message(f"Evaluation: {ev:.2f}")
     draw_eval_bar(ev)
     announce_board_state()
-
 
 def announce_board_state():
     if board.is_checkmate():
