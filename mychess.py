@@ -6,6 +6,7 @@ import random
 import math
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
+from PIL import Image, ImageTk
 
 root = tk.Tk()
 root.geometry("1000x700")
@@ -20,6 +21,7 @@ status_label = None
 log_text_widget = None
 highlight_squares = []
 flip_board = False
+piece_images = {}
 
 STOCKFISH_PATH = "/opt/homebrew/bin/stockfish"
 POSITIONS_FILE = "positions.txt"
@@ -37,6 +39,27 @@ def load_positions():
     else:
         positions = [""]
     random.shuffle(positions)
+
+
+def load_piece_images(scale: float = 1.0):
+    """
+    Loads bP.png, wK.png, etc., resizes each by `scale` (e.g. 0.8), and
+    stores a PhotoImage in piece_images['wK'], etc.
+    """
+    for color in ('b', 'w'):
+        for pt in ('P', 'R', 'N', 'B', 'Q', 'K'):
+            fname = f"images/{color}{pt}.png"
+            try:
+                pil = Image.open(fname)
+            except Exception as e:
+                raise RuntimeError(f"Failed to open {fname}: {e}")
+            if scale != 1.0:
+                w, h = pil.size
+                pil = pil.resize(
+                    (int(w * scale), int(h * scale)),
+                    resample=Image.LANCZOS
+                )
+            piece_images[color + pt] = ImageTk.PhotoImage(pil)
 
 
 def log_message(msg: str):
@@ -131,10 +154,6 @@ def get_base_square_color(row, col):
 
 
 def draw_board():
-    symbol_map = {
-        **{p: s for p, s in zip("prnbqk", "♟♜♞♝♛♚")},
-        **{p.upper(): s for p, s in zip("prnbqk", "♟♜♞♝♛♚")},
-    }
     for r in range(8):
         for c in range(8):
             sq = chess.square(7 - c, r) if flip_board else chess.square(c, 7 - r)
@@ -145,24 +164,11 @@ def draw_board():
             canvas.create_rectangle(x0, y0, x1, y1, fill=color, outline=color)
             p = board.piece_at(sq)
             if p:
-                symbol = symbol_map[p.symbol()]
-                fill_col = 'white' if p.symbol().isupper() else 'black'
-                # adjust piece icon size
-                size = 58
-                v_offset = 0
-                if p.piece_type in (chess.PAWN, chess.ROOK):
-                    size = int(58 * 0.9)
-                    v_offset = 2
-                elif p.piece_type in (chess.KING, chess.BISHOP):
-                    size = int(58 * 1.1)
-                    v_offset = -2
-                canvas.create_text(
-                    x0 + 30,
-                    y0 + 30 + v_offset,
-                    text=symbol,
-                    font=("Arial", size),
-                    fill=fill_col,
-                )
+                color = "w" if p.color else "b"
+                key = color + p.symbol().upper()  # e.g. 'wN', 'bK'
+                img = piece_images.get(key)
+                canvas.create_image(x0 + 30, y0 + 30, image=img)
+
 
 
 def update_display():
@@ -227,6 +233,7 @@ def stockfish_move():
     log_message(f"Evaluation: {ev:.2f}")
     draw_eval_bar(ev)
     announce_board_state()
+
 
 def announce_board_state():
     if board.is_checkmate():
@@ -308,6 +315,7 @@ def init_main_window():
 def main():
     global engine, board, positions, canvas, status_label, log_text_widget, position_idx, flip_board, selected_square
     load_positions()
+    load_piece_images(scale=0.725)
     engine = chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH)
     fen = positions[position_idx]
     try:
