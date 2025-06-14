@@ -46,8 +46,8 @@ def load_piece_images(scale: float = 1.0):
     Loads bP.png, wK.png, etc., resizes each by `scale` (e.g. 0.8), and
     stores a PhotoImage in piece_images['wK'], etc.
     """
-    for color in ('b', 'w'):
-        for pt in ('P', 'R', 'N', 'B', 'Q', 'K'):
+    for color in ("b", "w"):
+        for pt in ("P", "R", "N", "B", "Q", "K"):
             fname = f"images/{color}{pt}.png"
             try:
                 pil = Image.open(fname)
@@ -56,8 +56,7 @@ def load_piece_images(scale: float = 1.0):
             if scale != 1.0:
                 w, h = pil.size
                 pil = pil.resize(
-                    (int(w * scale), int(h * scale)),
-                    resample=Image.LANCZOS
+                    (int(w * scale), int(h * scale)), resample=Image.LANCZOS
                 )
             piece_images[color + pt] = ImageTk.PhotoImage(pil)
 
@@ -170,7 +169,6 @@ def draw_board():
                 canvas.create_image(x0 + 30, y0 + 30, image=img)
 
 
-
 def update_display():
     canvas.delete("all")
     draw_board()
@@ -202,16 +200,13 @@ def process_move(move):
     diff, rank = determine_diff_rank(move, top_moves, player_score)
     san = board.san(move)
     msg = (
-        f"Your move: {rank}: {san} (score={player_score:.2f}, diff={diff:.2f})"
+        f"Your move: {rank}: {san} (Eval change={diff:.2f})"
         if rank
-        else f"Your move: {san} (score={player_score:.2f}, diff={diff:.2f})"
+        else f"Your move: {san} (Eval change={diff:.2f})"
     )
     log_message(msg)
     board.push(move)
     update_display()
-    ev = evaluate_position(board)
-    log_message(f"Evaluation: {ev:.2f}")
-    draw_eval_bar(ev)
     announce_board_state()
     stockfish_move()
 
