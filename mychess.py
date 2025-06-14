@@ -255,6 +255,7 @@ def next_position():
     highlight_squares.clear()
     log_text_widget.delete("1.0", "end")
     update_display()
+    log_message(f"FEN: {fen}")
     ev = evaluate_position(board)
     log_message(f"Evaluation: {ev:.2f}")
     draw_eval_bar(ev)
@@ -273,6 +274,7 @@ def reload_position():
     highlight_squares.clear()
     log_text_widget.delete("1.0", "end")
     update_display()
+    log_message(f"FEN: {fen}")
     ev = evaluate_position(board)
     log_message(f"Evaluation: {ev:.2f}")
     draw_eval_bar(ev)
@@ -322,6 +324,7 @@ def main():
     selected_square = None
     canvas, status_label, log_text_widget = init_main_window()
     update_display()
+    log_message(f"FEN: {fen}")
     ev = evaluate_position(board)
     log_message(f"Evaluation: {ev:.2f}")
     draw_eval_bar(ev)
