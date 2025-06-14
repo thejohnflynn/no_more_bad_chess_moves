@@ -61,10 +61,10 @@ def load_piece_images(scale: float = 1.0):
             piece_images[color + pt] = ImageTk.PhotoImage(pil)
 
 
-def log_message(msg: str):
+def log_message(msg, tag=None):
     print(msg)
     if log_text_widget:
-        log_text_widget.insert("end", msg + "\n")
+        log_text_widget.insert("end", msg + "\n", tag)
         log_text_widget.see("end")
 
 
@@ -199,12 +199,23 @@ def process_move(move):
     player_score = evaluate_move(board, move)
     diff, rank = determine_diff_rank(move, top_moves, player_score)
     san = board.san(move)
-    msg = (
-        f"Your move: {rank}: {san} (Eval change={diff:.2f})"
-        if rank
-        else f"Your move: {san} (Eval change={diff:.2f})"
-    )
-    log_message(msg)
+    rank_text = f"{rank}: " if rank else ""
+    if board.turn:  # White to move
+        if diff >= -1:
+            tag = "Good"
+        elif -3 <= diff < -1:
+            tag = "Mistake"
+        else:
+            tag = "Blunder"
+    else:  # Black to move
+        if diff <= 1:
+            tag = "Good"
+        elif 1 < diff <= 3:
+            tag = "Mistake"
+        else:
+            tag = "Blunder"
+    msg = f"Your move: {rank_text}{san} (score={player_score:.2f}) (change={diff:.2f}) {tag}"
+    log_message(msg, tag)
     board.push(move)
     update_display()
     announce_board_state()
@@ -306,6 +317,9 @@ def init_main_window():
     txt_frame.pack(side="bottom", fill="both", expand=True)
     log_text_widget = ScrolledText(txt_frame, height=6, wrap="word")
     log_text_widget.pack(side="left", fill="both", expand=True)
+    log_text_widget.tag_configure("Good", background="#669966")
+    log_text_widget.tag_configure("Mistake", background="#b4722f")
+    log_text_widget.tag_configure("Blunder", background="#df5757")
     return canvas, status_label, log_text_widget
 
 
