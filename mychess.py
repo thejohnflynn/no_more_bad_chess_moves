@@ -157,7 +157,7 @@ def draw_board():
         for c in range(8):
             sq = chess.square(7 - c, r) if flip_board else chess.square(c, 7 - r)
             base = get_base_square_color(r, c)
-            color = lighten_hex_color(base) if sq in highlight_squares else base
+            color = lighten_hex_color(base, 0.3) if sq in highlight_squares else base
             x0, y0 = c * 60, r * 60
             x1, y1 = x0 + 60, y0 + 60
             canvas.create_rectangle(x0, y0, x1, y1, fill=color, outline=color)
