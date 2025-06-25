@@ -29,6 +29,7 @@ ENGINE_TIME_LIMIT = 0.5
 TOP_N = 3
 DARK_COLOR = "#669966"
 LIGHT_COLOR = "#99CC99"
+SHOW_EVAL_BAR = False
 
 
 def load_positions():
@@ -237,7 +238,8 @@ def stockfish_move():
     log_message(f"Engine plays: {mv_san}")
     ev = evaluate_position(board)
     log_message(f"Evaluation: {ev:.2f}")
-    draw_eval_bar(ev)
+    if SHOW_EVAL_BAR:
+        draw_eval_bar(ev)
     announce_board_state()
 
 
@@ -269,7 +271,8 @@ def next_position():
     log_message(f"FEN: {fen}")
     ev = evaluate_position(board)
     log_message(f"Evaluation: {ev:.2f}")
-    draw_eval_bar(ev)
+    if SHOW_EVAL_BAR:
+        draw_eval_bar(ev)
 
 
 def reload_position():
@@ -288,7 +291,8 @@ def reload_position():
     log_message(f"FEN: {fen}")
     ev = evaluate_position(board)
     log_message(f"Evaluation: {ev:.2f}")
-    draw_eval_bar(ev)
+    if SHOW_EVAL_BAR:
+        draw_eval_bar(ev)
 
 
 def init_main_window():
@@ -341,7 +345,8 @@ def main():
     log_message(f"FEN: {fen}")
     ev = evaluate_position(board)
     log_message(f"Evaluation: {ev:.2f}")
-    draw_eval_bar(ev)
+    if SHOW_EVAL_BAR:
+        draw_eval_bar(ev)
     root.update_idletasks()
     root.deiconify()
     root.attributes("-topmost", True)
