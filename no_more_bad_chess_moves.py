@@ -1,7 +1,6 @@
 import chess
 import chess.engine
 import os
-import yaml
 import random
 import math
 import tkinter as tk
@@ -297,7 +296,7 @@ def reload_position():
 
 def init_main_window():
     global canvas, eval_canvas, status_label, log_text_widget
-    root.title("mychess")
+    root.title("no more bad chess moves")
     btn_frame = tk.Frame(root)
     btn_frame.pack(side="top", fill="x")
     inner_btn_frame = tk.Frame(btn_frame)
