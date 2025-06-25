@@ -7,14 +7,13 @@ from PIL import Image, ImageTk
 import chess
 import chess.engine
 
-# Constants
+
 STOCKFISH_PATH = "/opt/homebrew/bin/stockfish"
 POSITIONS_FILE = "positions.txt"
 ENGINE_TIME_LIMIT = 0.5
 TOP_N = 3
 DARK_COLOR = "#669966"
 LIGHT_COLOR = "#99CC99"
-SHOW_EVAL_BAR = False
 
 
 class ChessModel:
@@ -124,13 +123,11 @@ class ChessView:
         inner.pack()
         self.reload_btn = tk.Button(inner, text="Reload Position")
         self.next_btn = tk.Button(inner, text="Next Position")
-        self.reload_btn.pack(side="left", padx=5, pady=5)
+        self.reload_btn.pack(side="left", padx=0, pady=5)
         self.next_btn.pack(side="left", padx=5, pady=5)
 
         frame = tk.Frame(root)
         frame.pack(side="top")
-        self.eval_canvas = tk.Canvas(frame, width=30, height=480)
-        self.eval_canvas.pack(side="left")
         self.board_canvas = tk.Canvas(frame, width=480, height=480)
         self.board_canvas.pack(side="left")
 
@@ -171,23 +168,6 @@ class ChessView:
                     key = ("w" if p.color else "b") + p.symbol().upper()
                     img = self.model.piece_images.get(key)
                     self.board_canvas.create_image(x0 + 30, y0 + 30, image=img)
-
-    def draw_eval_bar(self, val):
-        self.eval_canvas.delete("all")
-        h, w = 480, 30
-        C = 2.0
-        n = math.atan(val / C) / (math.pi / 2)
-        y = (1 - n) / 2 * h
-        if self.model.flip_board:
-            y = h - y
-        top, bot = (
-            ("black", "white") if not self.model.flip_board else ("white", "black")
-        )
-        self.eval_canvas.create_rectangle(0, 0, w, y, fill=top, outline="")
-        self.eval_canvas.create_rectangle(0, y, w, h, fill=bot, outline="")
-        self.eval_canvas.create_text(
-            w / 2, h - 10, text=f"{val:.2f}", font=("Arial", 9), fill="#888888"
-        )
 
     def log(self, msg, tag=None):
         print(msg)
@@ -239,8 +219,6 @@ class ChessController:
         self.view.log(f"FEN: {fen}")
         ev = self.model.evaluate_position()
         self.view.log(f"Evaluation: {ev:.2f}")
-        if SHOW_EVAL_BAR:
-            self.view.draw_eval_bar(ev)
 
     def on_click(self, event):
         c, r = event.x // 60, event.y // 60
@@ -306,8 +284,6 @@ class ChessController:
         self.view.log(f"Engine plays: {san}")
         ev = self.model.evaluate_position()
         self.view.log(f"Evaluation: {ev:.2f}")
-        if SHOW_EVAL_BAR:
-            self.view.draw_eval_bar(ev)
         self._announce_state()
 
     def _announce_state(self):
