@@ -1,6 +1,5 @@
 import os
 import random
-import math
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
 from PIL import Image, ImageTk
@@ -12,6 +11,8 @@ STOCKFISH_PATH = "/opt/homebrew/bin/stockfish"
 POSITIONS_FILE = "positions.txt"
 ENGINE_TIME_LIMIT = 0.5
 TOP_N = 3
+MISTAKE_THRESHOLD = -1.0
+BLUNDER_THRESHOLD = -3.0
 DARK_COLOR = "#669966"
 LIGHT_COLOR = "#99CC99"
 
@@ -90,20 +91,12 @@ class ChessModel:
 
     @staticmethod
     def classify_move(is_white_to_move, diff):
-        if is_white_to_move:
-            if diff >= -1:
-                return "Good"
-            elif diff >= -3:
-                return "Mistake"
-            else:
-                return "Blunder"
-        else:
-            if diff <= 1:
-                return "Good"
-            elif diff <= 3:
-                return "Mistake"
-            else:
-                return "Blunder"
+        val = diff if is_white_to_move else -diff
+        if val >= MISTAKE_THRESHOLD:
+            return "Good"
+        if val >= BLUNDER_THRESHOLD:
+            return "Mistake"
+        return "Blunder"
 
 
 class ChessView:
