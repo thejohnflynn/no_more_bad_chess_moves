@@ -93,10 +93,10 @@ class ChessModel:
     def classify_move(is_white_to_move, diff):
         val = diff if is_white_to_move else -diff
         if val >= MISTAKE_THRESHOLD:
-            return "Good"
+            return "Good ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅"
         if val >= BLUNDER_THRESHOLD:
-            return "Mistake"
-        return "Blunder"
+            return "Mistake ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️"
+        return "Blunder 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑"
 
 
 class ChessView:
@@ -133,9 +133,6 @@ class ChessView:
         txt_frame.pack(side="bottom", fill="both", expand=True)
         self.log_text = ScrolledText(txt_frame, height=6, wrap="word")
         self.log_text.pack(side="left", fill="both", expand=True)
-        self.log_text.tag_configure("Good", background="#669966")
-        self.log_text.tag_configure("Mistake", background="#b4722f")
-        self.log_text.tag_configure("Blunder", background="#df5757")
 
     def draw_board(self):
         self.board_canvas.delete("all")
@@ -162,9 +159,9 @@ class ChessView:
                     img = self.model.piece_images.get(key)
                     self.board_canvas.create_image(x0 + 30, y0 + 30, image=img)
 
-    def log(self, msg, tag=None):
+    def log(self, msg):
         print(msg)
-        self.log_text.insert("end", msg + "\n", tag)
+        self.log_text.insert("end", msg + "\n")
         self.log_text.see("end")
 
     @staticmethod
@@ -253,8 +250,7 @@ class ChessController:
         if move in first_moves:
             rank = f"Top {first_moves.index(move)+1}: "
         self.view.log(
-            f"Your move: {rank}{san} (score={player_sc:.2f}) (change={diff:.2f}) {tag}",
-            tag,
+            f"Your move: {rank}{san} (score={player_sc:.2f}) (change={diff:.2f}) {tag}"
         )
         self.model.board.push(move)
         self.view.draw_board()
