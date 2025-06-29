@@ -11,8 +11,9 @@ STOCKFISH_PATH = "/opt/homebrew/bin/stockfish"
 POSITIONS_FILE = "positions.txt"
 ENGINE_TIME_LIMIT = 0.5
 TOP_N = 3
-MISTAKE_THRESHOLD = -1.0
-BLUNDER_THRESHOLD = -3.0
+INACCURACY_THRESHOLD = -0.8
+MISTAKE_THRESHOLD = -1.7
+BLUNDER_THRESHOLD = -2.8
 DARK_COLOR = "#669966"
 LIGHT_COLOR = "#99CC99"
 
@@ -92,8 +93,10 @@ class ChessModel:
     @staticmethod
     def classify_move(is_white_to_move, diff):
         val = diff if is_white_to_move else -diff
-        if val >= MISTAKE_THRESHOLD:
+        if val >= INACCURACY_THRESHOLD:
             return "Good ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅"
+        if val >= MISTAKE_THRESHOLD:
+            return "Inaccuracy 🟦 🟦 🟦 🟦 🟦 🟦 🟦 🟦 🟦"
         if val >= BLUNDER_THRESHOLD:
             return "Mistake ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️"
         return "Blunder 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑"
