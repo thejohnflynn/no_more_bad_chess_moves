@@ -267,11 +267,6 @@ class ChessController:
         player_sc = self.model.evaluate_move(move)
         diff = player_sc - top[0][1]
         tag = ChessModel.classify_move(self.model.board.turn, diff)
-        if not self.result_recorded:
-            time_to_complete = self.model.record_result(self.model.position, tag.startswith("Good"))
-            self.result_recorded = True
-            if tag.startswith("Good"):
-                self.view.log(f"Took {time_to_complete:.2f} seconds")
         san = self.model.board.san(move)
         # rank detection
         first_moves = [pv[0] for pv, _ in top if pv]
@@ -281,6 +276,12 @@ class ChessController:
         self.view.log(
             f"Your move: {rank}{san} (score={player_sc:.2f}) (change={diff:.2f}) {tag}"
         )
+        # record time to complete
+        if not self.result_recorded:
+            time_to_complete = self.model.record_result(self.model.position, tag.startswith("Good"))
+            self.result_recorded = True
+            if tag.startswith("Good"):
+                self.view.log(f"Took {time_to_complete:.2f} seconds ⏰ ⏰ ⏰")
         self.model.board.push(move)
         self.view.draw_board()
         self._announce_state()
