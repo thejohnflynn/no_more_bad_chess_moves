@@ -39,6 +39,7 @@ class ChessModel:
         self.positions = pd.read_csv(POSITIONS_FILE)
 
     def save_positions(self):
+        self.positions.sort_values(by="time_to_complete", ascending=True, inplace=True)
         self.positions.to_csv(POSITIONS_FILE, index=False)
 
     def load_piece_images(self, scale=1.0):
@@ -278,7 +279,9 @@ class ChessController:
         )
         # record time to complete
         if not self.result_recorded:
-            time_to_complete = self.model.record_result(self.model.position, tag.startswith("Good"))
+            time_to_complete = self.model.record_result(
+                self.model.position, tag.startswith("Good")
+            )
             self.result_recorded = True
             if tag.startswith("Good"):
                 ttc = time.strftime("%M:%S", time.gmtime(time_to_complete))
