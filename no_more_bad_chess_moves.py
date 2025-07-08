@@ -281,7 +281,8 @@ class ChessController:
             time_to_complete = self.model.record_result(self.model.position, tag.startswith("Good"))
             self.result_recorded = True
             if tag.startswith("Good"):
-                self.view.log(f"Took {time_to_complete:.2f} seconds ⏰ ⏰ ⏰")
+                ttc = time.strftime("%M:%S", time.gmtime(time_to_complete))
+                self.view.log(f"Took {ttc} ⏰ ⏰ ⏰")
         self.model.board.push(move)
         self.view.draw_board()
         self._announce_state()
