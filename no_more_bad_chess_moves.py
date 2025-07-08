@@ -3,12 +3,13 @@ import random
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
 from PIL import Image, ImageTk
+import pandas as pd
 import chess
 import chess.engine
 
 
 STOCKFISH_PATH = "/opt/homebrew/bin/stockfish"
-POSITIONS_FILE = "positions.txt"
+POSITIONS_FILE = "positions.csv"
 ENGINE_TIME_LIMIT = 0.5
 TOP_N = 3
 INACCURACY_THRESHOLD = -0.8
@@ -22,8 +23,8 @@ class ChessModel:
     def __init__(self):
         self.engine = None
         self.board = None
-        self.positions = []
-        self.position_idx = 0
+        self.positions = pd.DataFrame()
+        self.position = ""
         self.flip_board = False
         self.piece_images = {}
 
@@ -35,12 +36,10 @@ class ChessModel:
             self.engine.quit()
 
     def load_positions(self):
-        if os.path.exists(POSITIONS_FILE):
-            with open(POSITIONS_FILE) as f:
-                self.positions = [line.strip() for line in f if line.strip()]
-        else:
-            self.positions = [""]
-        random.shuffle(self.positions)
+        self.positions = pd.read_csv(POSITIONS_FILE)
+
+    def save_positions(self):
+        self.df.to_csv(POSITIONS_FILE, index=False)
 
     def load_piece_images(self, scale=1.0):
         for color in ("b", "w"):
@@ -54,18 +53,25 @@ class ChessModel:
                     )
                 self.piece_images[color + pt] = ImageTk.PhotoImage(pil)
 
-    def new_position(self):
-        fen = self.positions[self.position_idx]
+    def sample_new_position(self):
+        """Samples a position from dataset
+        weighted by how long it took to complete previously"""
+        sample = self.positions.sample(n=1, weights="time_to_complete")
+        fen = sample.iloc[0]["position"].strip()
+        self.position = fen
+        self.load_position_to_board(fen)
+        return fen
+
+    def load_position_to_board(self, fen):
         try:
             self.board = chess.Board(fen) if fen else chess.Board()
         except ValueError:
             self.board = chess.Board()
         self.flip_board = not self.board.turn
-        return fen
 
-    def next_position(self):
-        self.position_idx = (self.position_idx + 1) % len(self.positions)
-        return self.new_position()
+    def reload_position(self):
+        self.load_position_to_board(self.position)
+        return self.position
 
     def evaluate_position(self):
         info = self.engine.analyse(
@@ -193,15 +199,15 @@ class ChessController:
         self.model.start_engine()
         self.model.load_positions()
         self.model.load_piece_images(scale=0.725)
-        fen = self.model.new_position()
+        fen = self.model.sample_new_position()
         self._refresh(fen)
 
     def reload_position(self):
-        fen = self.model.new_position()
+        fen = self.model.reload_position()
         self._refresh(fen)
 
     def next_position(self):
-        fen = self.model.next_position()
+        fen = self.model.sample_new_position()
         self._refresh(fen)
 
     def _refresh(self, fen):
