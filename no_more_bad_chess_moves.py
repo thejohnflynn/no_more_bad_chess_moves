@@ -1,5 +1,4 @@
-import os
-import random
+import time
 import tkinter as tk
 from tkinter.scrolledtext import ScrolledText
 from PIL import Image, ImageTk
@@ -17,6 +16,7 @@ MISTAKE_THRESHOLD = -1.7
 BLUNDER_THRESHOLD = -2.8
 DARK_COLOR = "#669966"
 LIGHT_COLOR = "#99CC99"
+DEFAULT_TIME_TO_COMPLETE = 300
 
 
 class ChessModel:
@@ -39,7 +39,7 @@ class ChessModel:
         self.positions = pd.read_csv(POSITIONS_FILE)
 
     def save_positions(self):
-        self.df.to_csv(POSITIONS_FILE, index=False)
+        self.positions.to_csv(POSITIONS_FILE, index=False)
 
     def load_piece_images(self, scale=1.0):
         for color in ("b", "w"):
@@ -95,6 +95,18 @@ class ChessModel:
         tmp.push(move)
         info = self.engine.analyse(tmp, chess.engine.Limit(time=ENGINE_TIME_LIMIT))
         return info["score"].white().score(mate_score=10000) / 100
+
+    def start_timer(self):
+        self._timer_start = time.time()
+
+    def record_result(self, fen: str, correct: bool):
+        elapsed = time.time() - self._timer_start
+        ttc = elapsed if correct else DEFAULT_TIME_TO_COMPLETE
+        self.positions.loc[
+            self.positions["position"].str.strip() == fen.strip(), "time_to_complete"
+        ] = ttc
+        self.save_positions()
+        return ttc
 
     @staticmethod
     def classify_move(is_white_to_move, diff):
@@ -187,6 +199,7 @@ class ChessController:
     def __init__(self, root):
         self.model = ChessModel()
         self.view = ChessView(root, self.model)
+        self.result_recorded = False
         self._bind_events()
         self._setup()
 
@@ -218,6 +231,8 @@ class ChessController:
         self.view.log(f"FEN: {fen}")
         ev = self.model.evaluate_position()
         self.view.log(f"Evaluation: {ev:.2f}")
+        self.model.start_timer()
+        self.result_recorded = False
 
     def on_click(self, event):
         c, r = event.x // 60, event.y // 60
@@ -252,6 +267,11 @@ class ChessController:
         player_sc = self.model.evaluate_move(move)
         diff = player_sc - top[0][1]
         tag = ChessModel.classify_move(self.model.board.turn, diff)
+        if not self.result_recorded:
+            time_to_complete = self.model.record_result(self.model.position, tag.startswith("Good"))
+            self.result_recorded = True
+            if tag.startswith("Good"):
+                self.view.log(f"Took {time_to_complete:.2f} seconds")
         san = self.model.board.san(move)
         # rank detection
         first_moves = [pv[0] for pv, _ in top if pv]
