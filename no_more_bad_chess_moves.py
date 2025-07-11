@@ -254,42 +254,53 @@ class ChessController:
 
     def _process_move(self, move):
         top = self.model.get_top_moves()
-        for i, (pv, sc) in enumerate(top):
-            temp = self.model.board.copy()
-            san_line = []
-            for m in pv:
-                if m is None:
-                    break
-                san_line.append(temp.san(m))
-                temp.push(m)
-            first = san_line[0] if san_line else ""
-            cont = " ".join(san_line)
-            self.view.log(f"Top {i+1}: {first} (score={sc:.2f}) ({cont})")
-        player_sc = self.model.evaluate_move(move)
-        diff = player_sc - top[0][1]
-        tag = ChessModel.classify_move(self.model.board.turn, diff)
-        san = self.model.board.san(move)
-        # rank detection
-        first_moves = [pv[0] for pv, _ in top if pv]
-        rank = ""
-        if move in first_moves:
-            rank = f"Top {first_moves.index(move)+1}: "
-        self.view.log(
-            f"Your move: {rank}{san} (score={player_sc:.2f}) (change={diff:.2f}) {tag}"
-        )
-        # record time to complete
-        if not self.result_recorded:
-            time_to_complete = self.model.record_result(
-                self.model.position, tag.startswith("Good")
-            )
-            self.result_recorded = True
-            if tag.startswith("Good"):
-                ttc = time.strftime("%M:%S", time.gmtime(time_to_complete))
-                self.view.log(f"Took {ttc} ⏰ ⏰ ⏰")
+        self._log_top_engine_lines(top)
+
+        tag, player_score, diff = self._log_player_move(move, top[0][1])
+        self._record_time(tag)
+
         self.model.board.push(move)
         self.view.draw_board()
         self._announce_state()
+
         self._engine_move()
+
+    def _log_top_engine_lines(self, top):
+        for i, (pv, score) in enumerate(top, start=1):
+            tmp = self.model.board.copy()
+            san_list = []
+            for m in pv:
+                if m is None:
+                    break
+                san_list.append(tmp.san(m))
+                tmp.push(m)
+            first = san_list[0] if san_list else ""
+            cont = " ".join(san_list)
+            self.view.log(f"Top {i}: {first} (score={score:.2f}) ({cont})")
+
+    def _log_player_move(self, move, top_score):
+        player_score = self.model.evaluate_move(move)
+        diff = player_score - top_score
+        tag = ChessModel.classify_move(self.model.board.turn, diff)
+        san = self.model.board.san(move)
+
+        # detect ranking in the PV
+        first_moves = [pv[0] for pv, _ in self.model.get_top_moves() if pv]
+        rank = f"Top {first_moves.index(move)+1}: " if move in first_moves else ""
+        self.view.log(
+            f"Your move: {rank}{san} "
+            f"(score={player_score:.2f}) "
+            f"(change={diff:.2f}) {tag}"
+        )
+        return tag, player_score, diff
+
+    def _record_time(self, tag):
+        if not self.result_recorded:
+            correct = tag.startswith("Good")
+            ttc = self.model.record_result(self.model.position, correct)
+            self.result_recorded = True
+            if correct:
+                self.view.log(f"Took {time.strftime('%M:%S', time.gmtime(ttc))} ⏰")
 
     def _engine_move(self):
         if self.model.board.is_game_over():
