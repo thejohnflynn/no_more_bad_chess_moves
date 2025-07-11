@@ -5,6 +5,7 @@ from PIL import Image, ImageTk
 import pandas as pd
 import chess
 import chess.engine
+from maia2 import model, inference
 
 
 STOCKFISH_PATH = "/opt/homebrew/bin/stockfish"
@@ -17,6 +18,7 @@ BLUNDER_THRESHOLD = -2.8
 DARK_COLOR = "#669966"
 LIGHT_COLOR = "#99CC99"
 DEFAULT_TIME_TO_COMPLETE = 300
+MAIA2_ELO = 2000
 
 
 class ChessModel:
@@ -27,6 +29,8 @@ class ChessModel:
         self.position = ""
         self.flip_board = False
         self.piece_images = {}
+        self.maia2_model = model.from_pretrained(type="rapid", device="cpu")
+        self.maia2_prepared = inference.prepare()
 
     def start_engine(self):
         self.engine = chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH)
@@ -89,7 +93,20 @@ class ChessModel:
             pv = info.get("pv", [])
             score = info["score"].white().score(mate_score=10000) / 100
             top.append((pv, score))
-        return top
+        move_probs, win_prob = inference.inference_each(
+            self.maia2_model,
+            self.maia2_prepared,
+            self.board.fen(),
+            MAIA2_ELO,
+            MAIA2_ELO,
+        )
+        top_n = list(move_probs.items())[:3]
+        mvs = []
+        for mv in top_n:
+            m = (self.board.san(chess.Move.from_uci(mv[0])), mv[1])
+            mvs.append(m)
+
+        return top, mvs
 
     def evaluate_move(self, move):
         tmp = self.board.copy()
@@ -253,8 +270,8 @@ class ChessController:
         self.view.draw_board()
 
     def _process_move(self, move):
-        top = self.model.get_top_moves()
-        self._log_top_engine_lines(top)
+        top, maia2_move_probs = self.model.get_top_moves()
+        self._log_top_engine_lines(top, maia2_move_probs)
 
         tag, player_score, diff = self._log_player_move(move, top[0][1])
         self._record_time(tag)
@@ -265,7 +282,7 @@ class ChessController:
 
         self._engine_move()
 
-    def _log_top_engine_lines(self, top):
+    def _log_top_engine_lines(self, top, maia2_move_probs):
         for i, (pv, score) in enumerate(top, start=1):
             tmp = self.model.board.copy()
             san_list = []
@@ -277,6 +294,7 @@ class ChessController:
             first = san_list[0] if san_list else ""
             cont = " ".join(san_list)
             self.view.log(f"Top {i}: {first} (score={score:.2f}) ({cont})")
+        self.view.log(f"Maia2: {maia2_move_probs}")
 
     def _log_player_move(self, move, top_score):
         player_score = self.model.evaluate_move(move)
@@ -285,7 +303,8 @@ class ChessController:
         san = self.model.board.san(move)
 
         # detect ranking in the PV
-        first_moves = [pv[0] for pv, _ in self.model.get_top_moves() if pv]
+        top, _ = self.model.get_top_moves()
+        first_moves = [pv[0] for pv, _ in top if pv]
         rank = f"Top {first_moves.index(move)+1}: " if move in first_moves else ""
         self.view.log(
             f"Your move: {rank}{san} "

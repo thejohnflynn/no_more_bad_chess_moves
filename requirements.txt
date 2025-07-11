@@ -1,2 +1,11 @@
 chess
 pillow
+einops
+gdown
+numpy
+pandas
+pyzstd
+Requests
+torch
+tqdm
+PyYAML
