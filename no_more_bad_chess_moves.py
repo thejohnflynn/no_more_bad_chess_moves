@@ -105,7 +105,8 @@ class ChessModel:
         mvs = []
         for mv in maia_moves:
             if self.board.is_legal(chess.Move.from_uci(mv[0])):
-                m = (self.board.san(chess.Move.from_uci(mv[0])), mv[1])
+                if mv[1] > 0.01:
+                    m = (self.board.san(chess.Move.from_uci(mv[0])), f"{mv[1]:.2f}")
             mvs.append(m)
 
         return top, mvs
