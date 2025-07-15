@@ -9,7 +9,7 @@ from maia2 import model, inference
 
 
 STOCKFISH_PATH = "/opt/homebrew/bin/stockfish"
-POSITIONS_FILE = "positions.csv"
+POSITIONS_FILE = "positions_auto.csv"
 ENGINE_TIME_LIMIT = 0.5
 TOP_N = 3
 INACCURACY_THRESHOLD = -0.8
@@ -104,7 +104,8 @@ class ChessModel:
         maia_moves = list(move_probs.items())
         mvs = []
         for mv in maia_moves:
-            m = (self.board.san(chess.Move.from_uci(mv[0])), mv[1])
+            if self.board.is_legal(chess.Move.from_uci(mv[0])):
+                m = (self.board.san(chess.Move.from_uci(mv[0])), mv[1])
             mvs.append(m)
 
         return top, mvs

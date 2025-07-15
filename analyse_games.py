@@ -1,17 +1,19 @@
+import sys
+import os
+import io
+import re
+
 import chess
 import chess.pgn
 import chess.engine
-import io
-import sys
-import os
-import re
-
+import pandas as pd
 
 INACCURACY_THRESHOLD = -0.8
 MISTAKE_THRESHOLD = -1.7
 BLUNDER_THRESHOLD = -2.8
 
-NUM_GAMES_TO_ANALYSE = 50
+NUM_GAMES_TO_ANALYSE = 100
+COLUMNS = ["position", "time_to_complete"]
 
 
 def get_eval_and_score(info):
@@ -155,15 +157,25 @@ def build_comment(existing, prev_eval, curr_eval, label, best_sans, temp_board):
     return comment.strip()
 
 
-def analyse_pgn(pgn_text, stockfish_path="stockfish", depth=10):
+def analyse_pgn(pgn_text, stockfish_path="stockfish", depth=10, df_positions=None):
+    """
+    Analyse one game, annotate blunders, and append pre-blunder FENs to df_positions.
+    Returns (annotated_pgn_str, updated_df_positions).
+    """
+    # Read game and metadata
     pgn = chess.pgn.read_game(io.StringIO(pgn_text))
+    white_player = pgn.headers.get("White", "")
+    black_player = pgn.headers.get("Black", "")
     board = pgn.board()
-    engine = chess.engine.SimpleEngine.popen_uci(stockfish_path)
-    node = pgn
 
-    # Initial analysis before any move
+    # Ensure DataFrame exists
+    if df_positions is None:
+        df_positions = pd.DataFrame(columns=COLUMNS)
+
+    engine = chess.engine.SimpleEngine.popen_uci(stockfish_path)
     info_before = engine.analyse(board, chess.engine.Limit(depth=depth))
 
+    node = pgn
     while node.variations:
         next_node = node.variations[0]
         temp_board = board.copy(stack=False)
@@ -184,6 +196,14 @@ def analyse_pgn(pgn_text, stockfish_path="stockfish", depth=10):
         nags, label = classify_move(
             prev_cp, curr_cp, move, best_sans, temp_board, engine, info_before, depth
         )
+
+        # If it's a blunder by saintidle or John, record the FEN just BEFORE the move
+        if chess.pgn.NAG_BLUNDER in nags:
+            mover = white_player if temp_board.turn == chess.WHITE else black_player
+            if mover in ("saintidle", "John"):
+                df_positions.loc[len(df_positions)] = [temp_board.fen(), 300.0]
+
+        # Attach NAGs and comment
         for nag in nags:
             next_node.nags.add(nag)
 
@@ -198,11 +218,16 @@ def analyse_pgn(pgn_text, stockfish_path="stockfish", depth=10):
         info_before = info_after
 
     engine.quit()
+
+    # Export annotated PGN
     output = io.StringIO()
     exporter = chess.pgn.FileExporter(output)
     pgn.accept(exporter)
-    raw = output.getvalue()
-    return raw.replace(" $2", "?").replace(" $4", "??").replace(" $6", "?!")
+    annotated_pgn = (
+        output.getvalue().replace(" $2", "?").replace(" $4", "??").replace(" $6", "?!")
+    )
+
+    return annotated_pgn, df_positions
 
 
 def main():
@@ -214,26 +239,33 @@ def main():
     base, _ = os.path.splitext(input_pgn_path)
     output_pgn_path = f"{base}_analysed.pgn"
 
-    # Allow multiple games per file
+    # live DataFrame to collect FENs
+    df_positions = pd.DataFrame(columns=COLUMNS)
+
     count = 1
+    annotated_games = []
     with open(input_pgn_path, "r", encoding="utf-8") as fin:
-        annotated_games = []
-        while True:
+        while count <= NUM_GAMES_TO_ANALYSE:
             print(f"Analysing game {count}...")
             game = chess.pgn.read_game(fin)
             if game is None:
                 break
-            if count == NUM_GAMES_TO_ANALYSE:
-                break
+
             raw_pgn = str(game)
-            annotated = analyse_pgn(raw_pgn)
+            annotated, df_positions = analyse_pgn(
+                raw_pgn, stockfish_path="stockfish", depth=10, df_positions=df_positions
+            )
             annotated_games.append(annotated)
             count += 1
 
+    # Write analysed PGN file
     with open(output_pgn_path, "w", encoding="utf-8") as fout:
         fout.write("\n\n".join(annotated_games))
-
     print(f"Written {output_pgn_path}")
+
+    # Write collected positions to CSV
+    df_positions.to_csv("positions_auto.csv", index=False)
+    print("Written positions_auto.csv")
 
 
 if __name__ == "__main__":
