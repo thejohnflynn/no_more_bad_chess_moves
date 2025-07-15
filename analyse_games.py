@@ -11,6 +11,8 @@ INACCURACY_THRESHOLD = -0.8
 MISTAKE_THRESHOLD = -1.7
 BLUNDER_THRESHOLD = -2.8
 
+NUM_GAMES_TO_ANALYSE = 50
+
 
 def get_eval_and_score(info):
     """
@@ -220,6 +222,8 @@ def main():
             print(f"Analysing game {count}...")
             game = chess.pgn.read_game(fin)
             if game is None:
+                break
+            if count == NUM_GAMES_TO_ANALYSE:
                 break
             raw_pgn = str(game)
             annotated = analyse_pgn(raw_pgn)
