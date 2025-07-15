@@ -93,6 +93,7 @@ class ChessModel:
             pv = info.get("pv", [])
             score = info["score"].white().score(mate_score=10000) / 100
             top.append((pv, score))
+
         move_probs, win_prob = inference.inference_each(
             self.maia2_model,
             self.maia2_prepared,
@@ -100,9 +101,9 @@ class ChessModel:
             MAIA2_ELO,
             MAIA2_ELO,
         )
-        top_n = list(move_probs.items())[:3]
+        maia_moves = list(move_probs.items())
         mvs = []
-        for mv in top_n:
+        for mv in maia_moves:
             m = (self.board.san(chess.Move.from_uci(mv[0])), mv[1])
             mvs.append(m)
 
