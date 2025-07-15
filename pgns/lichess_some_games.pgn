@@ -1,0 +1,192 @@
+[Event "Live Chess"]
+[Site "Chess.com"]
+[Date "2025.07.14"]
+[Round "?"]
+[White "saintidle"]
+[Black "vikashash"]
+[Result "0-1"]
+[TimeControl "900+10"]
+[WhiteElo "899"]
+[BlackElo "936"]
+[Termination "vikashash won by checkmate"]
+[Link "https://www.chess.com/game/140678435144"]
+
+1. d4 {[%clk 0:15:07.5][%timestamp 25]} 1... Nf6 {[%clk 0:15:06][%timestamp 40]}
+2. Bf4 {[%clk 0:15:14.3][%timestamp 32]} 2... g6 {[%clk 0:15:11.5][%timestamp
+45]} 3. Nf3 {[%clk 0:15:21.5][%timestamp 28]} 3... Bg7 {[%clk
+0:15:20.4][%timestamp 11]} 4. e3 {[%clk 0:15:28.7][%timestamp 28]} 4... d6
+{[%clk 0:15:29.2][%timestamp 12]} 5. Bd3 {[%clk 0:15:27.1][%timestamp 116]} 5...
+Nc6 {[%clk 0:15:32][%timestamp 72]} 6. c3 {[%clk 0:15:34.3][%timestamp 28]} 6...
+d5 {[%clk 0:15:05.2][%timestamp 368]} 7. Nbd2 {[%clk 0:15:18.6][%timestamp 257]}
+7... O-O {[%clk 0:15:09.6][%timestamp 56]} 8. O-O {[%clk 0:15:25.1][%timestamp
+35]} 8... Bg4 {[%clk 0:15:16][%timestamp 36]} 9. h3 {[%clk 0:15:15.2][%timestamp
+199]} 9... Bh5 {[%clk 0:15:18.1][%timestamp 79]} 10. Qc2 {[%clk
+0:14:31.2][%timestamp 540]} 10... Bxf3 {[%clk 0:15:23.5][%timestamp 46]} 11.
+Nxf3 {[%clk 0:14:37.6][%timestamp 36]} 11... Ne8 {[%clk 0:15:31.8][%timestamp
+17]} 12. Rfe1 {[%clk 0:13:45.2][%timestamp 624]} 12... e6 {[%clk
+0:15:35][%timestamp 68]} 13. e4 {[%clk 0:13:24.3][%timestamp 309]} 13... Ne7
+{[%clk 0:15:06][%timestamp 390]} 14. exd5 {[%clk 0:12:19.3][%timestamp 750]}
+14... Nxd5 {[%clk 0:14:53.8][%timestamp 222]} 15. Be5 {[%clk
+0:12:12.5][%timestamp 168]} 15... f6 {[%clk 0:14:12.8][%timestamp 510]} 16. Bh2
+{[%clk 0:11:57.7][%timestamp 248]} 16... Nd6 {[%clk 0:13:39.2][%timestamp 436]}
+17. Rxe6 {[%clk 0:11:47.3][%timestamp 204]} 17... Qd7 {[%clk
+0:12:40.5][%timestamp 687]} 18. Rae1 {[%clk 0:11:11.7][%timestamp 456]} 18...
+Rae8 {[%clk 0:12:38.6][%timestamp 119]} 19. Rxe8 {[%clk 0:10:43.2][%timestamp
+385]} 19... Rxe8 {[%clk 0:12:36.8][%timestamp 118]} 20. Bxd6 {[%clk
+0:09:43.1][%timestamp 701]} 20... cxd6 {[%clk 0:12:37.1][%timestamp 97]} 21. Qb3
+{[%clk 0:08:33.3][%timestamp 798]} 21... Rxe1+ {[%clk 0:12:27.5][%timestamp
+196]} 22. Nxe1 {[%clk 0:08:37.8][%timestamp 55]} 22... Qe6 {[%clk
+0:11:51.5][%timestamp 460]} 23. Nf3 {[%clk 0:08:20.5][%timestamp 273]} 23... Nf4
+{[%clk 0:11:48.6][%timestamp 129]} 24. Bc4 {[%clk 0:08:08.2][%timestamp 223]}
+24... d5 {[%clk 0:11:44.7][%timestamp 139]} 25. Bf1 {[%clk 0:06:36.5][%timestamp
+1017]} 25... b6 {[%clk 0:11:43.4][%timestamp 113]} 26. Qc2 {[%clk
+0:05:22.6][%timestamp 839]} 26... Bf8 {[%clk 0:11:38.9][%timestamp 145]} 27. Qd2
+{[%clk 0:04:47.4][%timestamp 452]} 27... Bd6 {[%clk 0:11:22.8][%timestamp 261]}
+28. g3 {[%clk 0:04:13.2][%timestamp 442]} 28... Nxh3+ {[%clk
+0:11:24.4][%timestamp 84]} 29. Kh2 {[%clk 0:03:45.8][%timestamp 374]} 29... Qf5
+{[%clk 0:11:05.8][%timestamp 286]} 30. Nh4 {[%clk 0:02:30.3][%timestamp 855]}
+30... Qxf2+ {[%clk 0:10:52.6][%timestamp 232]} 31. Qxf2 {[%clk
+0:02:31.5][%timestamp 88]} 31... Nxf2 {[%clk 0:11:00.1][%timestamp 25]} 32. Kg2
+{[%clk 0:02:26][%timestamp 155]} 32... Ne4 {[%clk 0:10:55.1][%timestamp 150]}
+33. Nf3 {[%clk 0:01:11.9][%timestamp 841]} 33... Bxg3 {[%clk
+0:10:48.9][%timestamp 162]} 34. c4 {[%clk 0:01:07][%timestamp 149]} 34... dxc4
+{[%clk 0:10:47.4][%timestamp 115]} 35. Bxc4+ {[%clk 0:01:11.2][%timestamp 58]}
+35... Kg7 {[%clk 0:10:53.2][%timestamp 42]} 36. Bd3 {[%clk 0:01:04.6][%timestamp
+166]} 36... f5 {[%clk 0:10:56.1][%timestamp 71]} 37. Ne5 {[%clk
+0:00:51][%timestamp 236]} 37... Bxe5 {[%clk 0:10:58.9][%timestamp 72]} 38. dxe5
+{[%clk 0:00:55.9][%timestamp 51]} 38... Kf7 {[%clk 0:11:07.7][%timestamp 12]}
+39. Bc4+ {[%clk 0:00:57.7][%timestamp 82]} 39... Ke7 {[%clk
+0:11:16.5][%timestamp 12]} 40. Bg8 {[%clk 0:00:46.5][%timestamp 212]} 40... h5
+{[%clk 0:11:24.1][%timestamp 24]} 41. Bh7 {[%clk 0:00:51.9][%timestamp 46]}
+41... Kf7 {[%clk 0:11:21.2][%timestamp 129]} 42. e6+ {[%clk
+0:00:49.9][%timestamp 120]} 42... Kg7 {[%clk 0:11:29.1][%timestamp 21]} 43. e7
+{[%clk 0:00:52.5][%timestamp 74]} 43... Nd6 {[%clk 0:11:37.6][%timestamp 15]}
+44. Kf3 {[%clk 0:00:36.1][%timestamp 264]} 44... Kxh7 {[%clk
+0:11:44.7][%timestamp 29]} 45. Kf4 {[%clk 0:00:43][%timestamp 31]} 45... Kg7
+{[%clk 0:11:53][%timestamp 17]} 46. Ke5 {[%clk 0:00:51.4][%timestamp 16]} 46...
+Ne8 {[%clk 0:12:00.4][%timestamp 26]} 47. Ke6 {[%clk 0:00:53.5][%timestamp 79]}
+47... h4 {[%clk 0:12:03.2][%timestamp 72]} 48. Kd7 {[%clk 0:00:29.1][%timestamp
+344]} 48... Nf6+ {[%clk 0:12:11.1][%timestamp 21]} 49. Kd8 {[%clk
+0:00:28.5][%timestamp 106]} 49... h3 {[%clk 0:12:14.3][%timestamp 68]} 50. e8=Q
+{[%clk 0:00:29.2][%timestamp 93]} 50... Nxe8 {[%clk 0:12:16.8][%timestamp 75]}
+51. Kxe8 {[%clk 0:00:37.1][%timestamp 21]} 51... h2 {[%clk 0:12:23.9][%timestamp
+29]} 52. Kd8 {[%clk 0:00:37.7][%timestamp 94]} 52... h1=Q {[%clk
+0:12:32.2][%timestamp 17]} 53. Kc8 {[%clk 0:00:36.3][%timestamp 114]} 53... Qa8+
+{[%clk 0:12:41.1][%timestamp 11]} 54. Kc7 {[%clk 0:00:43.9][%timestamp 24]}
+54... f4 {[%clk 0:12:50.1][%timestamp 10]} 55. Kd6 {[%clk 0:00:45.9][%timestamp
+80]} 55... f3 {[%clk 0:13:00][%timestamp 1]} 56. Ke5 {[%clk
+0:00:46.6][%timestamp 93]} 56... f2 {[%clk 0:13:09.9][%timestamp 1]} 57. Kd4
+{[%clk 0:00:43.7][%timestamp 129]} 57... f1=Q {[%clk 0:13:19.7][%timestamp 2]}
+58. Kc3 {[%clk 0:00:47.6][%timestamp 61]} 58... Qa1 {[%clk 0:13:27.5][%timestamp
+22]} 59. Kb3 {[%clk 0:00:50.3][%timestamp 73]} 59... g5 {[%clk
+0:13:37.3][%timestamp 2]} 60. Ka3 {[%clk 0:00:52.4][%timestamp 79]} 60... g4
+{[%clk 0:13:47.2][%timestamp 1]} 61. Kb3 {[%clk 0:00:56][%timestamp 64]} 61...
+g3 {[%clk 0:13:57.1][%timestamp 1]} 62. Ka3 {[%clk 0:01:04.9][%timestamp 11]}
+62... g2 {[%clk 0:14:07][%timestamp 1]} 63. Kb3 {[%clk 0:01:13.9][%timestamp
+10]} 63... g1=Q {[%clk 0:14:16][%timestamp 10]} 64. Ka3 {[%clk
+0:01:19.5][%timestamp 44]} 64... Qf3+ {[%clk 0:14:19.4][%timestamp 66]} 65. b3
+{[%clk 0:01:21.6][%timestamp 79]} 65... Qe4 {[%clk 0:14:15.9][%timestamp 135]}
+66. b4 {[%clk 0:01:18.5][%timestamp 131]} 66... Qgc1+ {[%clk
+0:14:22.1][%timestamp 38]} 67. Ka4 {[%clk 0:01:23.7][%timestamp 48]} 67... Qec2+
+{[%clk 0:14:32][%timestamp 1]} 68. Kb5 {[%clk 0:01:22.3][%timestamp 114]} 68...
+Qc6+ {[%clk 0:14:37.1][%timestamp 49]} 69. Ka6 {[%clk 0:01:27.9][%timestamp 44]}
+69... Qxa2# {[%clk 0:14:46.5][%timestamp 6]} 0-1
+
+
+[Event "Live Chess"]
+[Site "Chess.com"]
+[Date "2025.07.11"]
+[Round "?"]
+[White "saintidle"]
+[Black "StianHo"]
+[Result "1/2-1/2"]
+[TimeControl "900+10"]
+[WhiteElo "907"]
+[BlackElo "924"]
+[Termination "Game drawn by repetition"]
+[Link "https://www.chess.com/game/140569209282"]
+
+1. d4 {[%clk 0:15:07.1][%timestamp 29]} 1... Nf6 {[%clk 0:15:06.9][%timestamp
+31]} 2. Bf4 {[%clk 0:15:13.2][%timestamp 39]} 2... d5 {[%clk
+0:15:15.2][%timestamp 17]} 3. Nf3 {[%clk 0:15:17][%timestamp 62]} 3... Bg4
+{[%clk 0:15:12][%timestamp 132]} 4. e3 {[%clk 0:15:17.9][%timestamp 91]} 4... g6
+{[%clk 0:15:17.7][%timestamp 43]} 5. h3 {[%clk 0:15:05.8][%timestamp 221]} 5...
+Bxf3 {[%clk 0:15:26.4][%timestamp 13]} 6. Qxf3 {[%clk 0:15:13.1][%timestamp 27]}
+6... Bg7 {[%clk 0:15:35.5][%timestamp 9]} 7. Nd2 {[%clk 0:15:09.1][%timestamp
+140]} 7... O-O {[%clk 0:15:43.6][%timestamp 19]} 8. Bd3 {[%clk
+0:14:56.7][%timestamp 224]} 8... c5 {[%clk 0:15:47.2][%timestamp 64]} 9. c3
+{[%clk 0:14:37.4][%timestamp 293]} 9... c4 {[%clk 0:15:47.7][%timestamp 95]} 10.
+Bc2 {[%clk 0:14:11.7][%timestamp 357]} 10... Qb6 {[%clk 0:15:39.6][%timestamp
+181]} 11. Rb1 {[%clk 0:13:33.7][%timestamp 480]} 11... Nc6 {[%clk
+0:15:16.6][%timestamp 330]} 12. O-O {[%clk 0:13:11.3][%timestamp 324]} 12...
+Rac8 {[%clk 0:14:56.2][%timestamp 304]} 13. e4 {[%clk 0:12:29.8][%timestamp
+515]} 13... dxe4 {[%clk 0:14:58.2][%timestamp 80]} 14. Nxe4 {[%clk
+0:11:26.1][%timestamp 737]} 14... Nxe4 {[%clk 0:14:55.7][%timestamp 125]} 15.
+Bxe4 {[%clk 0:11:23.7][%timestamp 124]} 15... f5 {[%clk 0:14:34.3][%timestamp
+314]} 16. Bxc6 {[%clk 0:11:13.5][%timestamp 202]} 16... Qxc6 {[%clk
+0:14:23.8][%timestamp 205]} 17. Qe3 {[%clk 0:10:27.1][%timestamp 564]} 17... e6
+{[%clk 0:14:25.4][%timestamp 84]} 18. Rfe1 {[%clk 0:10:14.4][%timestamp 227]}
+18... Rfe8 {[%clk 0:14:31.4][%timestamp 40]} 19. Be5 {[%clk
+0:09:11.6][%timestamp 728]} 19... Bxe5 {[%clk 0:13:50.2][%timestamp 512]} 20.
+Qxe5 {[%clk 0:09:00.1][%timestamp 215]} 20... Rcd8 {[%clk 0:13:26.9][%timestamp
+333]} 21. Qf4 {[%clk 0:06:36][%timestamp 1541]} 21... a5 {[%clk
+0:13:24.8][%timestamp 121]} 22. Re2 {[%clk 0:06:15.2][%timestamp 308]} 22... Rd5
+{[%clk 0:13:20.5][%timestamp 143]} 23. Rbe1 {[%clk 0:05:56.2][%timestamp 290]}
+23... a4 {[%clk 0:13:12.9][%timestamp 176]} 24. a3 {[%clk 0:05:35.1][%timestamp
+311]} 24... Qb6 {[%clk 0:13:10.2][%timestamp 127]} 25. Qg5 {[%clk
+0:04:53.7][%timestamp 514]} 25... Kf7 {[%clk 0:12:50.5][%timestamp 297]} 26. Qh6
+{[%clk 0:04:39.6][%timestamp 241]} 26... Kf6 {[%clk 0:12:29.9][%timestamp 306]}
+27. Qxh7 {[%clk 0:04:16.7][%timestamp 329]} 27... Re7 {[%clk
+0:12:37.2][%timestamp 27]} 28. Qh4+ {[%clk 0:03:53][%timestamp 337]} 28... Kf7
+{[%clk 0:12:27.6][%timestamp 196]} 29. Qh7+ {[%clk 0:03:46.2][%timestamp 168]}
+29... Kf6 {[%clk 0:12:35.7][%timestamp 19]} 30. Qh8+ {[%clk
+0:03:23.9][%timestamp 323]} 30... Kf7 {[%clk 0:11:50.4][%timestamp 553]} 31.
+Qh7+ {[%clk 0:02:32.3][%timestamp 616]} 31... Kf6 {[%clk 0:11:57.8][%timestamp
+26]} 1/2-1/2
+
+
+[Event "Casual Game"]
+[Site "https://lichess.org"]
+[Date "07/07/2025, 20:56:16"]
+[White "Ger"]
+[Black "John"]
+[Result "0-1"]
+[PlyCount "106"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[Variant "Standard"]
+[Termination "mate"]
+
+1. d4 Nf6 2. e4 d6 3. e5 dxe5 4. dxe5 Qxd1+ 5. Kxd1 Ng4 6. Nf3 Nxf2+ 7. Ke2 Nxh1 8. Nc3 c6 9. b4 Bg4 10. b5 Nd7 11. Rb1 Nxe5 12. bxc6 bxc6 13. Bf4 Nc4 14. Rb4 Nb6 15. Bc7 e6 16. Rxg4 g6 17. Ne5 Bg7 18. Re4 O-O 19. Re3 Rac8 20. Bxb6 axb6 21. Nd7 Rfd8 22. Nxb6 Rc7 23. g3 Bd4 24. Rd3 Nf2 25. Nd1 Nxd3 26. cxd3 Bxb6 27. Nb2 Rcd7 28. Kf3 Rd5 29. Nc4 Bd4 30. a4 Rf5+ 31. Kg2 Rf2+ 32. Kg1 Rc2+ 33. Ne3 Bxe3+ 34. Kh1 Rc1 35. Kg2 Rxf1 36. Kxf1 Rxd3 37. Ke2 Rd2+ 38. Kxe3 Rxh2 39. a5 Ra2 40. Kf4 Rxa5 41. Kg4 c5 42. Kf3 c4 43. Ke2 Rc5 44. Ke3 Rc8 45. Kd2 c3+ 46. Kc2 h5 47. Kc1 c2 48. Kd2 c1=Q+ 49. Ke2 Qa3 50. Kf2 g5 51. Kg2 g4 52. Kh2 Rc2+ 53. Kg1 Qa1# 0-1
+
+
+[Event "Casual Game"]
+[Site "https://lichess.org"]
+[Date "07/07/2025, 20:08:32"]
+[White "Felix"]
+[Black "John"]
+[Result "*"]
+[PlyCount "43"]
+[FEN "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1"]
+[Variant "Standard"]
+[Termination "?"]
+
+1. d4 Nf6 2. c4 d6 3. Nc3 g6 4. e4 Bg7 5. d5 O-O 6. Bd3 c6 7. Nge2 Na6 8. a3 Nc5 9. Bc2 cxd5 10. cxd5 b6 11. h3 Bb7 12. O-O e6 13. b4 Nfxe4 14. bxc5 Nxc3 15. Nxc3 Bxc3 16. Rb1 dxc5 17. dxe6 Qe7 18. exf7+ Qxf7 19. Bb3 Bd4 20. Bxf7+ Rxf7 21. Bb2 Rd8 22. Bxd4 *
+
+[Event "Live Chess"]
+[Site "Chess.com"]
+[Date "2025.04.28"]
+[Round "?"]
+[White "saintidle"]
+[Black "webskimajster"]
+[Result "0-1"]
+[GameId "uhLguO7s"]
+[WhiteElo "802"]
+[BlackElo "832"]
+[Variant "Standard"]
+[TimeControl "900+10"]
+[ECO "D00"]
+[Opening "Queen's Pawn Game: Accelerated London System"]
+[Termination "Unknown"]
+[Annotator "lichess.org"]
+
+1. d4 { [%eval 0.17] [%clk 0:18:50] } 1... d5 { [%eval 0.2] } 2. Bf4 { [%eval 0.0] } { D00 Queen's Pawn Game: Accelerated London System } 2... Nc6 { [%eval 0.39] } 3. Nf3 { [%eval 0.23] } 3... e6 { [%eval 0.37] } 4. c3 { [%eval 0.25] } 4... Bd6 { [%eval 0.3] } 5. Bxd6 { [%eval 0.0] } 5... Qxd6 { [%eval 0.09] } 6. e3 { [%eval 0.09] } 6... Nf6 { [%eval 0.05] } 7. Bd3 { [%eval -0.12] } 7... Ne4 { [%eval 0.33] } 8. Nbd2 { [%eval 0.19] } 8... e5?? { (0.19 → 2.19) Blunder. Nxd2 was best. } { [%eval 2.19] } (8... Nxd2 9. Qxd2 e5 10. dxe5 Nxe5 11. Nxe5 Qxe5 12. O-O-O Be6 13. Bc2 g6 14. h4) 9. Nxe4 { [%eval 2.13] } 9... dxe4 { [%eval 2.16] } 10. Bxe4 { [%eval 2.17] } 10... Bg4 { [%eval 2.5] } 11. h3 { [%eval 2.44] } 11... Bxf3 { [%eval 2.48] } 12. Qxf3 { [%eval 2.51] } 12... O-O { [%eval 2.6] } 13. Bxc6 { [%eval 2.35] } 13... bxc6 { [%eval 2.4] } 14. O-O { [%eval 2.33] } 14... exd4 { [%eval 2.35] } 15. Rad1?! { (2.35 → 1.50) Inaccuracy. cxd4 was best. } { [%eval 1.5] } (15. cxd4 c5 16. Rfd1 Rad8 17. b3 g6 18. Rac1 cxd4 19. Rxd4 Qa3 20. Rxd8 Qxc1+) 15... Rae8? { (1.50 → 2.97) Mistake. d3 was best. } { [%eval 2.97] } (15... d3 16. Rd2) 16. Rfe1?? { (2.97 → 0.76) Blunder. Rxd4 was best. } { [%eval 0.76] } (16. Rxd4 Qg6 17. Ra4 Qc2 18. Qxc6 Qxb2 19. Rxa7 Qd2 20. Ra5 Qd6 21. Qxd6 cxd6) 16... c5 { [%eval 0.71] } 17. exd4 { [%eval 0.4] } 17... Rxe1+ { [%eval 0.22] } 18. Rxe1 { [%eval 0.32] } 18... cxd4 { [%eval 0.28] } 19. Rd1 { [%eval 0.28] } 19... c5 { [%eval 0.37] } 20. cxd4 { [%eval 0.01] } 20... cxd4 { [%eval 0.0] } 21. Qa3 { [%eval -0.11] } 21... Qb6 { [%eval 0.0] } 22. Rd2 { [%eval -0.01] } 22... Re8 { [%eval -0.02] } 23. Qa4?? { (-0.02 → -7.01) Blunder. Qf3 was best. } { [%eval -7.01] } (23. Qf3 g6 24. Qd1 Rd8 25. b3 Qc5 26. Rd3 Kg7 27. Kh2 Qd6+ 28. g3 h6) 23... Qb8?? { (-7.01 → 0.00) Blunder. Re1+ was best. } { [%eval 0.0] } (23... Re1+ 24. Kh2 Qb8+ 25. g3 Qa8 26. Qe8+ Rxe8 27. Rxd4 h5 28. Rd1 Qf3 29. Rf1) 24. Qxd4?? { (0.00 → Mate in 1) Checkmate is now unavoidable. Qd1 was best. } { [%eval #-1] } (24. Qd1 g6 25. Rxd4 Qxb2 26. Rd2 Qc3 27. g3 Kg7 28. Kg2 Re6 29. Rd5 Qb2) 24... Re1# { Black wins. } 0-1

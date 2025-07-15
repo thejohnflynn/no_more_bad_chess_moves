@@ -4,6 +4,12 @@ import chess.engine
 import io
 import sys
 import os
+import re
+
+
+INACCURACY_THRESHOLD = -0.8
+MISTAKE_THRESHOLD = -1.7
+BLUNDER_THRESHOLD = -2.8
 
 
 def get_eval_and_score(info):
@@ -34,7 +40,7 @@ def get_best_line_sans(info, board, length=8):
     return sans
 
 
-def detect_miss_or_only(info, board, move, engine, depth, threshold=300):
+def detect_miss_or_only(info, board, move, engine, depth):
     """
     Determine if a move is a 'Miss' or 'Only move':
     - 'Only Move': move is engine top recommendation and its advantage over second best exceeds threshold
@@ -48,7 +54,7 @@ def detect_miss_or_only(info, board, move, engine, depth, threshold=300):
         best_cp, _ = get_eval_and_score(best_info)
         second_cp, _ = get_eval_and_score(second_info)
         diff = best_cp - second_cp
-        if diff > threshold:
+        if diff > -BLUNDER_THRESHOLD * 100:
             if move == best_mv:
                 return "Only move. "
             else:
@@ -60,6 +66,9 @@ def classify_move(prev_cp, curr_cp, move, best_sans, board, engine, info_before,
     """
     Classify a move as Best/Only move/Miss/Mistake/Inaccuracy/Blunder.
     Returns a list of NAGs and a label.
+
+    NOTE: This is a simple algorithm using fixed thresholds on evaluation change,
+    the correct way is to classify moves relative to chances of winning.
     """
     nags = []
     comment = ""
@@ -72,13 +81,13 @@ def classify_move(prev_cp, curr_cp, move, best_sans, board, engine, info_before,
         comment += "Best move. "
     # Centipawn-based classification
     diff = abs(prev_cp - curr_cp)
-    if diff > 300:
+    if diff > -BLUNDER_THRESHOLD * 100:
         nags = [chess.pgn.NAG_BLUNDER]
         comment += "Blunder. "
-    elif diff > 100:
+    elif diff > -MISTAKE_THRESHOLD * 100:
         nags = [chess.pgn.NAG_MISTAKE]
         comment += "Mistake. "
-    elif diff > 66:
+    elif diff > -INACCURACY_THRESHOLD * 100:
         nags = [chess.pgn.NAG_DUBIOUS_MOVE]
         comment += "Inaccuracy. "
     return nags, comment
@@ -116,18 +125,31 @@ def format_variation_text(sans, board):
     return " ".join(parts)
 
 
+def strip_eval(comment):
+    """
+    Remove any [%eval ...] annotations from a comment string.
+    """
+    if not comment:
+        return ""
+    # remove all occurrences of [%eval ...]
+    return re.sub(r"\s*\[\%eval[^\]]*\]", "", comment).strip()
+
+
 def build_comment(existing, prev_eval, curr_eval, label, best_sans, temp_board):
     """
     Build the comment string based on classification label and best move sans.
     """
+    existing = strip_eval(existing)
     comment = f"{existing} [%eval {curr_eval}]"
     if label and best_sans:
         if "Best move" in label:
             comment = f"{existing} {label}[%eval {curr_eval}]"
         else:
             variation_text = format_variation_text(best_sans, temp_board)
-            comment = (f"{existing} ({prev_eval} -> {curr_eval}) {label}{best_sans[0]} was best."
-                       f" [%eval {curr_eval}] ({variation_text})")
+            comment = (
+                f"{existing} ({prev_eval} -> {curr_eval}) {label}{best_sans[0]} was best."
+                f" [%eval {curr_eval}] ({variation_text})"
+            )
     return comment.strip()
 
 
@@ -157,13 +179,17 @@ def analyse_pgn(pgn_text, stockfish_path="stockfish", depth=10):
         curr_cp, curr_eval = get_eval_and_score(info_after)
 
         # Classify move
-        nags, label = classify_move(prev_cp, curr_cp, move, best_sans, temp_board, engine, info_before, depth)
+        nags, label = classify_move(
+            prev_cp, curr_cp, move, best_sans, temp_board, engine, info_before, depth
+        )
         for nag in nags:
             next_node.nags.add(nag)
 
         # Build and set comment
-        existing = next_node.comment or ""
-        comment = build_comment(existing, prev_eval, curr_eval, label, best_sans, temp_board)
+        existing = "" #next_node.comment or ""  # Just clear comments for now
+        comment = build_comment(
+            existing, prev_eval, curr_eval, label, best_sans, temp_board
+        )
         next_node.comment = comment
 
         node = next_node
@@ -179,20 +205,32 @@ def analyse_pgn(pgn_text, stockfish_path="stockfish", depth=10):
 
 def main():
     if len(sys.argv) != 2:
-        print("Usage: python whychess.py input.pgn")
+        print("Usage: python analyse_games.py input.pgn")
         sys.exit(1)
 
     input_pgn_path = sys.argv[1]
     base, _ = os.path.splitext(input_pgn_path)
+    output_pgn_path = f"{base}_analysed.pgn"
 
-    with open(input_pgn_path, "r", encoding="utf-8") as f:
-        pgn_text = f.read()
+    # Allow multiple games per file
+    count = 1
+    with open(input_pgn_path, "r", encoding="utf-8") as fin:
+        annotated_games = []
+        while True:
+            print(f"Analysing game {count}...")
+            game = chess.pgn.read_game(fin)
+            if game is None:
+                break
+            raw_pgn = str(game)
+            annotated = analyse_pgn(raw_pgn)
+            annotated_games.append(annotated)
+            count += 1
 
-    analysed = analyse_pgn(pgn_text)
-    with open(f"{base}_analysed.pgn", "w", encoding="utf-8") as f:
-        f.write(analysed)
+    with open(output_pgn_path, "w", encoding="utf-8") as fout:
+        fout.write("\n\n".join(annotated_games))
 
-    print(f"Written {base}_analysed.pgn")
+    print(f"Written {output_pgn_path}")
+
 
 if __name__ == "__main__":
     main()
