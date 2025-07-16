@@ -101,15 +101,18 @@ class ChessModel:
             MAIA2_ELO,
             MAIA2_ELO,
         )
-        maia_moves = list(move_probs.items())
-        mvs = []
-        for mv in maia_moves:
-            if self.board.is_legal(chess.Move.from_uci(mv[0])):
-                if mv[1] > 0.01:
-                    m = (self.board.san(chess.Move.from_uci(mv[0])), f"{mv[1]:.2f}")
-            mvs.append(m)
+        move_probs_san = {}
+        for uci_str, prob in move_probs.items():
+            try:
+                move = chess.Move.from_uci(uci_str)
+                if self.board.is_legal(move):
+                    san = self.board.san(move)
+                    if prob > 0.01:  # Skip tiny and zero prob moves
+                        move_probs_san[san] = round(prob, 2)
+            except:
+                pass  # Skip invalid or illegal moves
 
-        return top, mvs
+        return top, move_probs_san
 
     def evaluate_move(self, move):
         tmp = self.board.copy()
