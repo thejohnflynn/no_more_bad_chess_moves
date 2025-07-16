@@ -107,7 +107,7 @@ class ChessModel:
                 move = chess.Move.from_uci(uci_str)
                 if self.board.is_legal(move):
                     san = self.board.san(move)
-                    if prob > 0.01:  # Skip tiny and zero prob moves
+                    if prob > 0.01:  # Skip tiny and zero prob moves
                         move_probs_san[san] = round(prob, 2)
             except:
                 pass  # Skip invalid or illegal moves
@@ -258,6 +258,14 @@ class ChessController:
         self.model.start_timer()
         self.result_recorded = False
 
+    def _get_promote_friendly_move(self, from_square, to_square):
+        mv = chess.Move(from_square, to_square, promotion=chess.QUEEN)
+        return (
+            mv
+            if mv in self.model.board.legal_moves
+            else chess.Move(from_square, to_square, promotion=None)
+        )
+
     def on_click(self, event):
         c, r = event.x // 60, event.y // 60
         sq = chess.square(7 - c, r) if self.model.flip_board else chess.square(c, 7 - r)
@@ -267,11 +275,13 @@ class ChessController:
                 self.view.highlight_squares.clear()
                 self.view.highlight_squares.append(sq)
         else:
-            mv = chess.Move(self.view.selected_square, sq)
+            mv = self._get_promote_friendly_move(self.view.selected_square, sq)
             self.view.highlight_squares.clear()
             self.view.highlight_squares.extend([self.view.selected_square, sq])
             if mv in self.model.board.legal_moves:
                 self._process_move(mv)
+            else:
+                self.view.log("Illegal move!!!")
             self.view.selected_square = None
         self.view.draw_board()
 
@@ -281,7 +291,6 @@ class ChessController:
 
         tag, player_score, diff = self._log_player_move(move, top[0][1])
         self._record_time(tag)
-
         self.model.board.push(move)
         self.view.draw_board()
         self._announce_state()
