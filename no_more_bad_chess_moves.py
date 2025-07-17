@@ -10,8 +10,8 @@ from maia2 import model, inference
 
 STOCKFISH_PATH = "/opt/homebrew/bin/stockfish"
 POSITIONS_FILE = "positions_auto.csv"
-ENGINE_TIME_LIMIT = 0.5
-TOP_N = 3
+ENGINE_TIME_LIMIT = 0.25
+MAX_MOVES_TO_CALCULATE = 50
 INACCURACY_THRESHOLD = -0.8
 MISTAKE_THRESHOLD = -1.7
 BLUNDER_THRESHOLD = -2.8
@@ -31,6 +31,7 @@ class ChessModel:
         self.piece_images = {}
         self.maia2_model = model.from_pretrained(type="rapid", device="cpu")
         self.maia2_prepared = inference.prepare()
+        self.eval_data = pd.DataFrame()
 
     def start_engine(self):
         self.engine = chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH)
@@ -79,21 +80,34 @@ class ChessModel:
         return self.position
 
     def evaluate_position(self):
-        info = self.engine.analyse(
-            self.board, chess.engine.Limit(time=ENGINE_TIME_LIMIT)
-        )
-        return info["score"].white().score(mate_score=10000) / 100
+        self.eval_data = pd.DataFrame  # Clear it out
+        self.evaluate_position_with_engine()
+        self.evaluate_position_with_maia()
+        print(self.eval_data)  # TODO: REMOVE
+        num_legal_moves = self.board.legal_moves.count()
+        print(f"Legal moves: {self.board.legal_moves.count()}")
+        assert num_legal_moves == len(
+            self.eval_data
+        ), f"{num_legal_moves} != {len(self.eval_data)}"
 
-    def get_top_moves(self):
+    def evaluate_position_with_engine(self):
         infos = self.engine.analyse(
-            self.board, chess.engine.Limit(time=ENGINE_TIME_LIMIT), multipv=TOP_N
+            self.board,
+            chess.engine.Limit(time=ENGINE_TIME_LIMIT),
+            multipv=MAX_MOVES_TO_CALCULATE,
         )
-        top = []
-        for info in infos:
+        pa = []
+        for rank, info in enumerate(infos, start=1):
             pv = info.get("pv", [])
+            move = self.board.san(pv[0])
+            pv = self.board.variation_san(pv)
             score = info["score"].white().score(mate_score=10000) / 100
-            top.append((pv, score))
+            pa.append(
+                {"engine_rank": rank, "move": move, "engine_eval": score, "pv": pv}
+            )
+        self.eval_data = pd.DataFrame(pa)
 
+    def evaluate_position_with_maia(self):
         move_probs, win_prob = inference.inference_each(
             self.maia2_model,
             self.maia2_prepared,
@@ -101,24 +115,26 @@ class ChessModel:
             MAIA2_ELO,
             MAIA2_ELO,
         )
-        move_probs_san = {}
+        self.eval_data["maia_prob"] = 0.0
         for uci_str, prob in move_probs.items():
-            try:
-                move = chess.Move.from_uci(uci_str)
-                if self.board.is_legal(move):
-                    san = self.board.san(move)
-                    if prob > 0.01:  # Skip tiny and zero prob moves
-                        move_probs_san[san] = round(prob, 2)
-            except:
-                pass  # Skip invalid or illegal moves
+            move = chess.Move.from_uci(uci_str)
+            if self.board.is_legal(move):
+                san = self.board.san(move)
+                if prob > 0.01:  # Skip tiny and zero prob moves
+                    self.eval_data.loc[self.eval_data["move"] == san, "maia_prob"] = (
+                        round(prob, 2)
+                    )
+        self.eval_data["humanness"] = (
+            (self.eval_data["maia_prob"] / self.eval_data["maia_prob"].max() * 100)
+            .round()
+            .astype(int)
+        )
 
-        return top, move_probs_san
-
-    def evaluate_move(self, move):
-        tmp = self.board.copy()
-        tmp.push(move)
-        info = self.engine.analyse(tmp, chess.engine.Limit(time=ENGINE_TIME_LIMIT))
-        return info["score"].white().score(mate_score=10000) / 100
+    # def evaluate_move(self, move):
+    #     tmp = self.board.copy()
+    #     tmp.push(move)
+    #     info = self.engine.analyse(tmp, chess.engine.Limit(time=ENGINE_TIME_LIMIT))
+    #     return info["score"].white().score(mate_score=10000) / 100
 
     def start_timer(self):
         self._timer_start = time.time()
@@ -253,8 +269,9 @@ class ChessController:
         self.view.log_text.delete("1.0", "end")
         self.view.draw_board()
         self.view.log(f"FEN: {fen}")
-        ev = self.model.evaluate_position()
-        self.view.log(f"Evaluation: {ev:.2f}")
+        self.model.evaluate_position()
+        current_eval = self.model.eval_data.loc[0, "engine_eval"]
+        self.view.log(f"Evaluation: {current_eval:.2f}")
         self.model.start_timer()
         self.result_recorded = False
 
@@ -267,6 +284,9 @@ class ChessController:
         )
 
     def on_click(self, event):
+
+        # TODO: TEST THAT EVALUATION HAS FINISHED!, Otherwise the data isn't ready yet, disallow player input until it's ready
+
         c, r = event.x // 60, event.y // 60
         sq = chess.square(7 - c, r) if self.model.flip_board else chess.square(c, 7 - r)
         if self.view.selected_square is None:
@@ -286,10 +306,17 @@ class ChessController:
         self.view.draw_board()
 
     def _process_move(self, move):
-        top, maia2_move_probs = self.model.get_top_moves()
-        self._log_top_engine_lines(top, maia2_move_probs)
+        # top_engine = (
+        #     self.model.get_engine_moves()
+        # )  # NO IT SHOULD BE DONE AT POSITION LOAD
+        # print(top_engine)
+        # maia2_move_probs = (
+        #     self.model.get_top_maia_moves()
+        # )  # NO IT SHOULD BE DONE AT POSITION LOAD
+        # self._log_top_engine_lines(top_engine, maia2_move_probs)
 
-        tag, player_score, diff = self._log_player_move(move, top[0][1])
+        current_eval = self.model.eval_data.loc[0, "engine_eval"]
+        tag, player_score, diff = self._log_player_move(move, current_eval)
         self._record_time(tag)
         self.model.board.push(move)
         self.view.draw_board()
@@ -297,36 +324,40 @@ class ChessController:
 
         self._engine_move()
 
-    def _log_top_engine_lines(self, top, maia2_move_probs):
-        for i, (pv, score) in enumerate(top, start=1):
-            tmp = self.model.board.copy()
-            san_list = []
-            for m in pv:
-                if m is None:
-                    break
-                san_list.append(tmp.san(m))
-                tmp.push(m)
-            first = san_list[0] if san_list else ""
-            cont = " ".join(san_list)
-            self.view.log(f"Top {i}: {first} (score={score:.2f}) ({cont})")
-        self.view.log(f"Maia2: {maia2_move_probs}")
+    # def _log_top_engine_lines(self, top, maia2_move_probs):
+    #     for i, (pv, score) in enumerate(top, start=1):
+    #         tmp = (
+    #             self.model.board.copy()
+    #         )  # Should this chess.Move to SAN conversion be done here?
+    #         san_list = []
+    #         for m in pv:
+    #             if m is None:
+    #                 break
+    #             san_list.append(tmp.san(m))
+    #             tmp.push(m)
+    #         first = san_list[0] if san_list else ""
+    #         cont = " ".join(san_list)
+    #         self.view.log(f"Top {i}: {first} (score={score:.2f}) ({cont})")
+    #     self.view.log(f"Maia2: {maia2_move_probs}")
 
-    def _log_player_move(self, move, top_score):
-        player_score = self.model.evaluate_move(move)
-        diff = player_score - top_score
-        tag = ChessModel.classify_move(self.model.board.turn, diff)
+    def _log_player_move(self, move, best_eval):
         san = self.model.board.san(move)
-
-        # detect ranking in the PV
-        top, _ = self.model.get_top_moves()
-        first_moves = [pv[0] for pv, _ in top if pv]
-        rank = f"Top {first_moves.index(move)+1}: " if move in first_moves else ""
+        move_eval = self.model.eval_data.loc[
+            self.model.eval_data["move"] == san, "engine_eval"
+        ].iloc[0]
+        diff = move_eval - best_eval
+        tag = ChessModel.classify_move(
+            self.model.board.turn, diff
+        )  # TODO: Here? or classify ALL moves at analysis time?!
+        rank = self.model.eval_data.loc[
+            self.model.eval_data["move"] == san, "engine_rank"
+        ].iloc[0]
         self.view.log(
-            f"Your move: {rank}{san} "
-            f"(score={player_score:.2f}) "
+            f"Your move: Top {rank} {san} "
+            f"(score={move_eval:.2f}) "
             f"(change={diff:.2f}) {tag}"
         )
-        return tag, player_score, diff
+        return tag, move_eval, diff
 
     def _record_time(self, tag):
         if not self.result_recorded:
@@ -338,7 +369,6 @@ class ChessController:
 
     def _engine_move(self):
         if self.model.board.is_game_over():
-            self.view.log("Game over.")
             return
         res = self.model.engine.play(
             self.model.board, chess.engine.Limit(time=ENGINE_TIME_LIMIT)
@@ -350,9 +380,12 @@ class ChessController:
         self.view.highlight_squares.extend([mv.from_square, mv.to_square])
         self.view.draw_board()
         self.view.log(f"Engine plays: {san}")
-        ev = self.model.evaluate_position()
-        self.view.log(f"Evaluation: {ev:.2f}")
         self._announce_state()
+        if self.model.board.is_game_over():
+            return
+        self.model.evaluate_position()
+        current_eval = self.model.eval_data.loc[0, "engine_eval"]
+        self.view.log(f"Evaluation: {current_eval:.2f}")
 
     def _announce_state(self):
         b = self.model.board
