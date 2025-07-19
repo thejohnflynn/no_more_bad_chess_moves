@@ -33,6 +33,14 @@ class ChessModel:
         self.maia2_model = model.from_pretrained(type="rapid", device="cpu")
         self.maia2_prepared = inference.prepare()
 
+        self.rating_map = {
+            5: "*****",
+            4: "****",
+            3: "***",
+            2: "**",
+            1: "*",
+        }
+
     def start_engine(self):
         self.engine = chess.engine.SimpleEngine.popen_uci(STOCKFISH_PATH)
 
@@ -83,10 +91,23 @@ class ChessModel:
         self.eval_data = pd.DataFrame  # Clear it out
         self.evaluate_position_with_engine()
         self.evaluate_position_with_maia()
+        self.classify_all_moves()
         num_legal_moves = self.board.legal_moves.count()
         assert num_legal_moves == len(
             self.eval_data
         ), f"num_legal_moves {num_legal_moves} != len(self.eval_data){len(self.eval_data)}"
+        self.eval_data = self.eval_data[  # Re-order columns
+            [
+                "engine_rank",
+                "move",
+                "engine_eval",
+                "diff",
+                "maia_prob",
+                "humanness",
+                "class",
+                "pv",
+            ]
+        ]
 
     def evaluate_position_with_engine(self):
         infos = self.engine.analyse(
@@ -94,14 +115,22 @@ class ChessModel:
             chess.engine.Limit(time=ENGINE_TIME_LIMIT),
             multipv=MAX_MOVES_TO_EVALUATE,
         )
+        best_eval = infos[0]["score"].white().score(mate_score=10000) / 100
         pa = []
         for rank, info in enumerate(infos, start=1):
             pv = info.get("pv", [])
             move = self.board.san(pv[0])
             pv = self.board.variation_san(pv)
             score = info["score"].white().score(mate_score=10000) / 100
+            diff = score - best_eval
             pa.append(
-                {"engine_rank": rank, "move": move, "engine_eval": score, "pv": pv}
+                {
+                    "engine_rank": rank,
+                    "move": move,
+                    "engine_eval": score,
+                    "diff": diff,
+                    "pv": pv,
+                }
             )
         self.eval_data = pd.DataFrame(pa)
 
@@ -118,15 +147,23 @@ class ChessModel:
             move = chess.Move.from_uci(uci_str)
             if self.board.is_legal(move):
                 san = self.board.san(move)
-                if prob > 0.01:  # Skip tiny and zero prob moves
-                    self.eval_data.loc[self.eval_data["move"] == san, "maia_prob"] = (
-                        round(prob, 2)
-                    )
+                self.eval_data.loc[self.eval_data["move"] == san, "maia_prob"] = round(
+                    prob, 2
+                )
         self.eval_data["humanness"] = (
-            (self.eval_data["maia_prob"] / self.eval_data["maia_prob"].max() * 100)
+            (self.eval_data["maia_prob"] / self.eval_data["maia_prob"].max() * 4 + 1)
             .round()
             .astype(int)
         )
+        self.eval_data["humanness"] = self.eval_data["humanness"].map(
+            lambda x: self.rating_map.get(x, "")
+        )
+
+    def classify_all_moves(self):
+        for idx, row in self.eval_data.iterrows():
+            print(row)
+            tag = self.classify_move(self.board.turn, row["diff"])
+            self.eval_data.loc[idx, "class"] = tag
 
     def start_timer(self):
         self._timer_start = time.time()
@@ -144,12 +181,12 @@ class ChessModel:
     def classify_move(is_white_to_move, diff):
         val = diff if is_white_to_move else -diff
         if val >= INACCURACY_THRESHOLD:
-            return "Good ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅ ✅"
+            return "Good       ✅ ✅ ✅"
         if val >= MISTAKE_THRESHOLD:
-            return "Inaccuracy 🟦 🟦 🟦 🟦 🟦 🟦 🟦 🟦 🟦"
+            return "Inaccuracy 🟦 🟦 🟦"
         if val >= BLUNDER_THRESHOLD:
-            return "Mistake ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️ ⚠️"
-        return "Blunder 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑 🛑"
+            return "Mistake    👏 👏 👏"
+        return "Blunder    🛑 🛑 🛑"
 
 
 class ChessView:
@@ -262,8 +299,6 @@ class ChessController:
         self.view.draw_board()
         self.view.log(f"FEN: {fen}")
         self.model.evaluate_position()
-        current_eval = self.model.eval_data.loc[0, "engine_eval"]
-        self.view.log(f"Evaluation: {current_eval:.2f}")
         self.model.start_timer()
         self.result_recorded = False
 
@@ -298,8 +333,12 @@ class ChessController:
         self.view.draw_board()
 
     def _process_move(self, move):
-        current_eval = self.model.eval_data.loc[0, "engine_eval"]
-        tag, player_score, diff = self._log_player_move(move, current_eval)
+        san = self.model.board.san(move)
+        self._log_player_move(san)
+        tag = self.model.eval_data.loc[
+            self.model.eval_data["move"] == san, "class"
+        ].to_string()
+        print(tag)
         self._record_time(tag)
         self.model.board.push(move)
         self.view.draw_board()
@@ -307,25 +346,16 @@ class ChessController:
 
         self._engine_move()
 
-    def _log_player_move(self, move, best_eval):
-        san = self.model.board.san(move)
-        move_eval = self.model.eval_data.loc[
-            self.model.eval_data["move"] == san, "engine_eval"
-        ].iloc[0]
-        diff = move_eval - best_eval
-        tag = ChessModel.classify_move(
-            self.model.board.turn, diff
-        )  # TODO: Here? or classify ALL moves at analysis time?!
-        rank = self.model.eval_data.loc[
-            self.model.eval_data["move"] == san, "engine_rank"
-        ].iloc[0]
+    def _log_player_move(self, san_move):
+        current_eval = self.model.eval_data.loc[0, "engine_eval"]
+        self.view.log(f"Evaluation: {current_eval:.2f}")
+        self.view.log("Top engine moves:")
         self.view.log(self.model.eval_data[:10].to_string())
-        self.view.log(
-            f"Your move: Top {rank} {san} "
-            f"(score={move_eval:.2f}) "
-            f"(change={diff:.2f}) {tag}"
-        )
-        return tag, move_eval, diff
+        self.view.log("Your move:")
+        move_data = self.model.eval_data.loc[
+            self.model.eval_data["move"] == san_move
+        ].to_string()
+        self.view.log(move_data)
 
     def _record_time(self, tag):
         if not self.result_recorded:
@@ -352,8 +382,6 @@ class ChessController:
         if self.model.board.is_game_over():
             return
         self.model.evaluate_position()
-        current_eval = self.model.eval_data.loc[0, "engine_eval"]
-        self.view.log(f"Evaluation: {current_eval:.2f}")
 
     def _announce_state(self):
         b = self.model.board
