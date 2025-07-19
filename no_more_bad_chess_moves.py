@@ -88,7 +88,7 @@ class ChessModel:
         return self.position
 
     def evaluate_position(self):
-        self.eval_data = pd.DataFrame  # Clear it out
+        self.eval_data = pd.DataFrame()  # Clear it out
         self.evaluate_position_with_engine()
         self.evaluate_position_with_maia()
         self.classify_all_moves()
@@ -161,7 +161,6 @@ class ChessModel:
 
     def classify_all_moves(self):
         for idx, row in self.eval_data.iterrows():
-            print(row)
             tag = self.classify_move(self.board.turn, row["diff"])
             self.eval_data.loc[idx, "class"] = tag
 
@@ -337,8 +336,7 @@ class ChessController:
         self._log_player_move(san)
         tag = self.model.eval_data.loc[
             self.model.eval_data["move"] == san, "class"
-        ].to_string()
-        print(tag)
+        ].iloc[0]
         self._record_time(tag)
         self.model.board.push(move)
         self.view.draw_board()
