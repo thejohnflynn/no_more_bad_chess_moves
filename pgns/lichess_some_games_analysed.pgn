@@ -11,102 +11,56 @@
 [Termination "vikashash won by checkmate"]
 [Link "https://www.chess.com/game/140678435144"]
 
-1. d4 { [%eval 0.22] } 1... Nf6 { [%eval 0.21] } 2. Bf4 { [%eval -0.09] } 2...
-g6 { [%eval 0.35] } 3. Nf3 { [%eval 0.18] } 3... Bg7
-{ Best move. [%eval 0.15] } 4. e3 { [%eval 0.12] } 4... d6 { [%eval 0.32] } 5.
-Bd3 { [%eval 0.00] } 5... Nc6 { [%eval 0.26] } 6. c3
-{ Best move. [%eval 0.25] } 6... d5 { [%eval 0.80] } 7. Nbd2 { [%eval 0.56] }
-7... O-O { [%eval 0.63] } 8. O-O { Best move. [%eval 0.66] } 8... Bg4
-{ [%eval 1.30] } 9. h3 { Best move. [%eval 1.12] } 9... Bh5?!
-{ (1.12 -> 2.68) Inaccuracy. Bxf3 was best. [%eval 2.68] (9... Bxf3 10. Nxf3 a5 11. Rc1 e6 12. Rc2) }
-10. Qc2?!
-{ (2.68 -> 1.18) Inaccuracy. g4 was best. [%eval 1.18] (10. g4 g5 11. Nxg5 Bg6 12. Bxg6 hxg6 13. Ngf3 Qc8) }
-10... Bxf3 { Best move. [%eval 1.20] } 11. Nxf3 { Best move. [%eval 1.18] }
-11... Ne8 { [%eval 1.74] } 12. Rfe1 { [%eval 1.22] } 12... e6 { [%eval 1.96] }
-13. e4 { Best move. [%eval 1.81] } 13... Ne7?!
-{ (1.81 -> 2.79) Inaccuracy. dxe4 was best. [%eval 2.79] (13... dxe4 14. Bxe4 Nf6 15. Bxc6 bxc6 16. b3 Nd5 17. Bd2) }
-14. exd5?!
-{ (2.79 -> 1.32) Inaccuracy. e5 was best. [%eval 1.32] (14. e5 c6 15. h4 h6) }
-14... Nxd5 { Best move. [%eval 1.27] } 15. Be5 { [%eval 1.23] } 15... f6?!
-{ (1.23 -> 2.61) Inaccuracy. a5 was best. [%eval 2.61] (15... a5 16. Rad1 a4 17. a3 c6 18. Bc4 b5 19. Ba2) }
-16. Bh2 { [%eval 2.72] } 16... Nd6?!
-{ (2.72 -> 3.58) Inaccuracy. Qd7 was best. [%eval 3.58] (16... Qd7 17. Qe2 Kf7 18. h4 Bh6 19. h5) }
-17. Rxe6 { Best move. [%eval 3.81] } 17... Qd7?
-{ (3.81 -> 5.52) Mistake. Nf7 was best. [%eval 5.52] (17... Nf7 18. Re2 Qd7) }
-18. Rae1?
-{ (5.52 -> 3.29) Mistake. Rxd6 was best. [%eval 3.29] (18. Rxd6 cxd6 19. Qb3 Kh8 20. Qxd5 Qc6 21. Bc4) }
-18... Rae8 { Best move. [%eval 3.34] } 19. Rxe8 { [%eval 3.24] } 19... Rxe8
-{ Best move. [%eval 3.33] } 20. Bxd6 { [%eval 2.99] } 20... cxd6?
-{ (2.99 -> 5.49) Mistake. Rxe1+ was best. [%eval 5.49] (20... Rxe1+ 21. Nxe1 Qxd6 22. Qb3 b6 23. Bc4 c6) }
-21. Qb3?
-{ (5.49 -> 3.44) Mistake. Rxe8+ was best. [%eval 3.44] (21. Rxe8+ Qxe8 22. Bc4 Kf8 23. Bxd5 Bh6 24. Bb3) }
-21... Rxe1+ { Best move. [%eval 3.43] } 22. Nxe1
-{ Only move. Best move. [%eval 3.25] } 22... Qe6 { Best move. [%eval 3.54] }
-23. Nf3 { [%eval 3.05] } 23... Nf4 { Best move. [%eval 3.13] } 24. Bc4
-{ Best move. [%eval 3.05] } 24... d5 { Best move. [%eval 3.01] } 25. Bf1
-{ Best move. [%eval 2.93] } 25... b6 { [%eval 3.66] } 26. Qc2?!
-{ (3.66 -> 2.42) Inaccuracy. g3 was best. [%eval 2.42] (26. g3 Nh5 27. Qb5) }
-26... Bf8 { Best move. [%eval 2.38] } 27. Qd2 { [%eval 1.92] } 27... Bd6
-{ Best move. [%eval 2.09] } 28. g3?
-{ (2.09 -> 0.18) Mistake. Qd1 was best. [%eval 0.18] (28. Qd1 Kf7 29. Ne1 Kg7 30. h4 Nh5 31. a3 f5) }
-28... Nxh3+ { Best move. [%eval 0.22] } 29. Kh2 { Best move. [%eval 0.29] }
-29... Qf5 { [%eval 0.53] } 30. Nh4??
-{ (0.53 -> -2.48) Blunder. Qe2 was best. [%eval -2.48] (30. Qe2 Ng5 31. Nxg5 fxg5 32. Bh3 Qe4 33. Qxe4 dxe4) }
-30... Qxf2+ { Best move. [%eval -2.56] } 31. Qxf2
-{ Only move. Best move. [%eval -2.80] } 31... Nxf2 { Best move. [%eval -2.83] }
-32. Kg2 { [%eval -2.92] } 32... Ne4?!
-{ (-2.92 -> -2.04) Inaccuracy. Nd1 was best. [%eval -2.04] (32... Nd1 33. Kh3 Nxb2 34. Bg2 Nd1) }
-33. Nf3?!
-{ (-2.04 -> -3.65) Inaccuracy. g4 was best. [%eval -3.65] (33. g4 Bg3 34. Nf3 Bf4 35. Ba6) }
-33... Bxg3 { [%eval -3.18] } 34. c4 { [%eval -3.53] } 34... dxc4?!
-{ (-3.53 -> -2.64) Inaccuracy. Bd6 was best. [%eval -2.64] (34... Bd6 35. Bd3 f5 36. cxd5 Nf6 37. Ng5) }
-35. Bxc4+ { Best move. [%eval -2.75] } 35... Kg7 { [%eval -3.05] } 36. Bd3
-{ Best move. [%eval -3.19] } 36... f5 { Best move. [%eval -3.51] } 37. Ne5?!
-{ (-3.51 -> -4.45) Inaccuracy. Bxe4 was best. [%eval -4.45] (37. Bxe4 fxe4 38. Ng5 Bh4 39. Nxe4 Bf6 40. d5 Bxb2) }
-37... Bxe5 { Best move. [%eval -4.05] } 38. dxe5 { Best move. [%eval -4.05] }
-38... Kf7 { [%eval -3.85] } 39. Bc4+ { Best move. [%eval -4.25] } 39... Ke7
-{ [%eval -4.14] } 40. Bg8 { Best move. [%eval -4.23] } 40... h5
-{ [%eval -4.05] } 41. Bh7 { Best move. [%eval -3.74] } 41... Kf7
-{ [%eval -4.00] } 42. e6+ { Best move. [%eval -3.93] } 42... Kg7
-{ [%eval -4.70] } 43. e7 { [%eval -4.90] } 43... Nd6
-{ Best move. [%eval -4.68] } 44. Kf3 { Best move. [%eval -4.80] } 44... Kxh7?!
-{ (-4.80 -> -3.76) Inaccuracy. Kf6 was best. [%eval -3.76] (44... Kf6 45. b4 Kxe7 46. Bxg6 h4 47. Bh5) }
-45. Kf4?! { Best move. Inaccuracy. [%eval -5.00] } 45... Kg7?!
-{ Best move. Inaccuracy. [%eval -6.51] } 46. Ke5 { [%eval -7.05] } 46... Ne8
-{ Best move. [%eval -7.08] } 47. Ke6 { [%eval -7.14] } 47... h4
-{ Best move. [%eval -7.23] } 48. Kd7 { Best move. [%eval -7.26] } 48... Nf6+
-{ [%eval -7.40] } 49. Kd8 { [%eval -7.53] } 49... h3
-{ Best move. [%eval -7.85] } 50. e8=Q { [%eval -8.19] } 50... Nxe8
-{ Best move. [%eval -8.13] } 51. Kxe8 { Best move. [%eval -8.55] } 51... h2
-{ Best move. [%eval -8.70] } 52. Kd8 { Best move. [%eval -8.43] } 52... h1=Q
-{ Best move. [%eval -8.43] } 53. Kc8 { [%eval -8.78] } 53... Qa8+
-{ Best move. [%eval -8.89] } 54. Kc7 { [%eval -8.88] } 54... f4?!
-{ (-8.88 -> -8.02) Inaccuracy. Kf6 was best. [%eval -8.02] (54... Kf6 55. b4 Ke5 56. b5 Ke4 57. Kd7) }
-55. Kd6 { [%eval -8.80] } 55... f3 { [%eval -8.73] } 56. Ke5 { [%eval -9.53] }
-56... f2 { Best move. [%eval -9.28] } 57. Kd4 { Best move. [%eval -9.64] }
-57... f1=Q { Best move. [%eval -9.93] } 58. Kc3??
-{ (-9.93 -> #-4) Blunder. b3 was best. [%eval #-4] (58. b3 Kf6 59. Ke3) } 58...
-Qa1??
-{ (#-4 -> -9.85) Blunder. Qc8+ was best. [%eval -9.85] (58... Qc8+ 59. Kb3 Qd3+ 60. Ka4 Qcc4+ 61. b4 Qxa2#) }
-59. Kb3??
-{ (-9.85 -> #-6) Miss. Blunder. a4 was best. [%eval #-6] (59. a4 Qc6+ 60. Kd2) }
-59... g5??
-{ (#-6 -> -11.69) Blunder. Qf3+ was best. [%eval -11.69] (59... Qf3+ 60. Kc4 Qc1+ 61. Kb5 Qxb2+ 62. Ka6 Qxa2+ 63. Kb5) }
-60. Ka3??
-{ (-11.69 -> #-6) Blunder. a3 was best. [%eval #-6] (60. a3 Qf3+ 61. Ka4 Qad1+ 62. Kb4) }
-60... g4 { [%eval #-5] } 61. Kb3 { Best move. [%eval #-5] } 61... g3??
-{ (#-5 -> -10.98) Blunder. Qf3+ was best. [%eval -10.98] (61... Qf3+ 62. Kc4 Qxa2+ 63. b3 Qa6+ 64. Kb4 Qa5+ 65. Kc4) }
-62. Ka3??
-{ (-10.98 -> #-5) Blunder. Kc2 was best. [%eval #-5] (62. Kc2 Qc8+ 63. Kd2 Qcc1+ 64. Kd3 Qd1+ 65. Ke3) }
-62... g2 { [%eval #-4] } 63. Kb3 { Best move. [%eval #-4] } 63... g1=Q??
-{ (#-4 -> -12.75) Blunder. Qf3+ was best. [%eval -12.75] (63... Qf3+ 64. Kc4 Qxa2+ 65. b3 Qaxb3+ 66. Kd4 Qbd5#) }
-64. Ka3??
-{ (-12.75 -> #-3) Blunder. Kc4 was best. [%eval #-3] (64. Kc4 Qxa2+ 65. Kd3 Qb3+ 66. Ke2 Qxb2+ 67. Kd3) }
-64... Qf3+ { Best move. [%eval #-2] } 65. b3 { Best move. [%eval #-2] } 65...
-Qe4 { [%eval #-2] } 66. b4 { Best move. [%eval #-2] } 66... Qgc1+
-{ [%eval #-2] } 67. Ka4 { Best move. [%eval #-2] } 67... Qec2+ { [%eval #-1] }
-68. Kb5 { Best move. [%eval #-1] } 68... Qc6+ { [%eval #-1] } 69. Ka6
-{ Best move. [%eval #-1] } 69... Qxa2# { [%eval #0] } 0-1
+1. d4 { [%eval 0.19] } 1... Nf6 { [%eval 0.23] } 2. Bf4 { [%eval 0.23] } 2...
+g6 { [%eval 0.16] } 3. Nf3 { [%eval 0.18] } 3... Bg7 { [%eval 0.13] } 4. e3
+{ [%eval 0.02] } 4... d6 { [%eval 0.06] } 5. Bd3 { [%eval 0.05] } 5... Nc6
+{ [%eval 0.16] } 6. c3 { [%eval 0.11] } 6... d5? { Mistake. [%eval 0.97] } 7.
+Nbd2 { [%eval 0.56] } 7... O-O { [%eval 0.67] } 8. O-O { [%eval 0.73] } 8...
+Bg4 { [%eval 1.14] } 9. h3 { [%eval 1.17] } 9... Bh5?
+{ Mistake. [%eval 2.68] } 10. Qc2? { Mistake. [%eval 1.26] } 10... Bxf3
+{ [%eval 1.16] } 11. Nxf3 { [%eval 1.18] } 11... Ne8 { [%eval 1.62] } 12. Rfe1
+{ [%eval 1.19] } 12... e6 { [%eval 1.71] } 13. e4 { [%eval 1.71] } 13... Ne7
+{ [%eval 2.31] } 14. exd5?! { Inaccuracy. [%eval 1.25] } 14... Nxd5
+{ [%eval 1.35] } 15. Be5 { [%eval 1.26] } 15... f6? { Mistake. [%eval 2.69] }
+16. Bh2 { [%eval 2.52] } 16... Nd6 { [%eval 3.79] } 17. Rxe6 { [%eval 3.75] }
+17... Qd7 { [%eval 6.36] } 18. Rae1 { [%eval 3.37] } 18... Rae8
+{ [%eval 3.23] } 19. Rxe8 { [%eval 3.44] } 19... Rxe8 { [%eval 3.73] } 20. Bxd6
+{ [%eval 3.52] } 20... cxd6 { [%eval 5.59] } 21. Qb3 { [%eval 3.72] } 21...
+Rxe1+ { [%eval 3.37] } 22. Nxe1 { [%eval 3.53] } 22... Qe6 { [%eval 3.42] } 23.
+Nf3 { [%eval 2.70] } 23... Nf4 { [%eval 2.98] } 24. Bc4 { [%eval 2.87] } 24...
+d5 { [%eval 3.28] } 25. Bf1 { [%eval 3.51] } 25... b6 { [%eval 3.02] } 26. Qc2
+{ [%eval 2.17] } 26... Bf8 { [%eval 2.04] } 27. Qd2 { [%eval 1.85] } 27... Bd6
+{ [%eval 2.02] } 28. g3?? { Blunder. [%eval 0.32] } 28... Nxh3+
+{ [%eval 0.44] } 29. Kh2 { [%eval 0.44] } 29... Qf5 { [%eval 0.60] } 30. Nh4??
+{ Blunder. [%eval -2.51] } 30... Qxf2+ { [%eval -2.55] } 31. Qxf2
+{ [%eval -2.73] } 31... Nxf2 { [%eval -2.69] } 32. Kg2 { [%eval -3.07] } 32...
+Ne4?! { Inaccuracy. [%eval -1.60] } 33. Nf3? { Mistake. [%eval -3.60] }
+33... Bxg3 { [%eval -2.55] } 34. c4 { [%eval -3.60] } 34... dxc4
+{ [%eval -2.94] } 35. Bxc4+ { [%eval -3.70] } 35... Kg7 { [%eval -3.05] } 36.
+Bd3 { [%eval -3.47] } 36... f5 { [%eval -3.52] } 37. Ne5 { [%eval -4.12] }
+37... Bxe5 { [%eval -4.14] } 38. dxe5 { [%eval -4.13] } 38... Kf7
+{ [%eval -3.86] } 39. Bc4+ { [%eval -4.23] } 39... Ke7 { [%eval -4.15] } 40.
+Bg8 { [%eval -4.28] } 40... h5 { [%eval -3.65] } 41. Bh7 { [%eval -3.81] }
+41... Kf7 { [%eval -4.26] } 42. e6+ { [%eval -4.37] } 42... Kg7
+{ [%eval -4.63] } 43. e7 { [%eval -4.54] } 43... Nd6 { [%eval -4.57] } 44. Kf3
+{ [%eval -5.21] } 44... Kxh7 { [%eval -5.04] } 45. Kf4 { [%eval -5.20] } 45...
+Kg7 { [%eval -6.47] } 46. Ke5 { [%eval -6.48] } 46... Ne8 { [%eval -6.67] } 47.
+Ke6 { [%eval -7.25] } 47... h4 { [%eval -7.59] } 48. Kd7 { [%eval -7.57] }
+48... Nf6+ { [%eval -7.48] } 49. Kd8 { [%eval -7.84] } 49... h3
+{ [%eval -7.86] } 50. e8=Q { [%eval -8.31] } 50... Nxe8 { [%eval -8.30] } 51.
+Kxe8 { [%eval -8.62] } 51... h2 { [%eval -8.54] } 52. Kd8 { [%eval -8.56] }
+52... h1=Q { [%eval -8.89] } 53. Kc8 { [%eval -9.50] } 53... Qa8+
+{ [%eval -8.76] } 54. Kc7 { [%eval -9.14] } 54... f4 { [%eval -8.65] } 55. Kd6
+{ [%eval -8.92] } 55... f3 { [%eval -8.96] } 56. Ke5 { [%eval -9.34] } 56... f2
+{ [%eval -8.71] } 57. Kd4 { [%eval #-5] } 57... f1=Q { [%eval #-4] } 58. Kc3
+{ [%eval #-3] } 58... Qa1 { [%eval #-4] } 59. Kb3 { [%eval #-3] } 59... g5
+{ [%eval #-4] } 60. Ka3 { [%eval #-4] } 60... g4 { [%eval #-4] } 61. Kb3
+{ [%eval #-4] } 61... g3 { [%eval #-4] } 62. Ka3 { [%eval #-3] } 62... g2
+{ [%eval #-4] } 63. Kb3 { [%eval #-4] } 63... g1=Q { [%eval #-3] } 64. Ka3
+{ [%eval #-3] } 64... Qf3+ { [%eval #-2] } 65. b3 { [%eval #-2] } 65... Qe4
+{ [%eval #-2] } 66. b4 { [%eval #-2] } 66... Qgc1+ { [%eval #-2] } 67. Ka4
+{ [%eval #-2] } 67... Qec2+ { [%eval #-1] } 68. Kb5 { [%eval #-1] } 68... Qc6+
+{ [%eval #-1] } 69. Ka6 { [%eval #-1] } 69... Qxa2# { [%eval #0] } 0-1
 
 
 
@@ -123,38 +77,29 @@ Qe4 { [%eval #-2] } 66. b4 { Best move. [%eval #-2] } 66... Qgc1+
 [Termination "Game drawn by repetition"]
 [Link "https://www.chess.com/game/140569209282"]
 
-1. d4 { [%eval 0.22] } 1... Nf6 { [%eval 0.21] } 2. Bf4 { [%eval -0.09] } 2...
-d5 { [%eval 0.17] } 3. Nf3 { Best move. [%eval 0.21] } 3... Bg4
-{ [%eval 0.38] } 4. e3 { [%eval 0.19] } 4... g6 { [%eval 0.46] } 5. h3
-{ [%eval 0.64] } 5... Bxf3 { Best move. [%eval 0.67] } 6. Qxf3
-{ Best move. [%eval 0.76] } 6... Bg7 { [%eval 0.82] } 7. Nd2 { [%eval 0.39] }
-7... O-O { [%eval 0.39] } 8. Bd3 { [%eval 0.24] } 8... c5
-{ Best move. [%eval 0.15] } 9. c3 { Best move. [%eval 0.09] } 9... c4
-{ [%eval 0.82] } 10. Bc2 { Best move. [%eval 0.72] } 10... Qb6 { [%eval 0.75] }
-11. Rb1 { Best move. [%eval 0.78] } 11... Nc6 { [%eval 1.08] } 12. O-O
-{ [%eval 0.95] } 12... Rac8 { Best move. [%eval 1.07] } 13. e4 { [%eval 0.85] }
-13... dxe4 { Best move. [%eval 0.82] } 14. Nxe4 { Best move. [%eval 0.99] }
-14... Nxe4 { Best move. [%eval 0.95] } 15. Bxe4 { [%eval 0.66] } 15... f5?
-{ (0.66 -> 2.81) Mistake. e5 was best. [%eval 2.81] (15... e5 16. Bxc6 Qxc6 17. dxe5 Qxf3 18. gxf3 f6 19. e6) }
-16. Bxc6?!
-{ (2.81 -> 1.14) Inaccuracy. Bd5+ was best. [%eval 1.14] (16. Bd5+ Kh8 17. Rfe1 Rcd8 18. Re6) }
-16... Qxc6 { Best move. [%eval 1.30] } 17. Qe3 { [%eval 1.17] } 17... e6
-{ [%eval 1.32] } 18. Rfe1 { Best move. [%eval 1.58] } 18... Rfe8
-{ Best move. [%eval 1.54] } 19. Be5 { [%eval 1.10] } 19... Bxe5
-{ Best move. [%eval 1.09] } 20. Qxe5 { Best move. [%eval 1.28] } 20... Rcd8
-{ Best move. [%eval 1.24] } 21. Qf4 { [%eval 0.77] } 21... a5?!
-{ (0.77 -> 1.69) Inaccuracy. Rd5 was best. [%eval 1.69] (21... Rd5 22. Re5 Qb5 23. Rbe1 Rxe5 24. Rxe5 Qxb2 25. Rc5) }
-22. Re2 { [%eval 1.37] } 22... Rd5 { Best move. [%eval 1.53] } 23. Rbe1
-{ Best move. [%eval 1.56] } 23... a4 { [%eval 1.72] } 24. a3 { [%eval 1.63] }
-24... Qb6 { [%eval 2.08] } 25. Qg5 { [%eval 1.62] } 25... Kf7 { [%eval 2.31] }
-26. Qh6 { Best move. [%eval 2.31] } 26... Kf6?!
-{ (2.31 -> 3.32) Inaccuracy. Kg8 was best. [%eval 3.32] (26... Kg8 27. h4 Qd6 28. Re5 Rxe5 29. Rxe5 Qd8 30. f3) }
-27. Qxh7 { Best move. [%eval 3.78] } 27... Re7 { [%eval 4.19] } 28. Qh4+
-{ [%eval 4.00] } 28... Kf7 { Best move. [%eval 3.83] } 29. Qh7+
-{ Best move. [%eval 3.80] } 29... Kf6 { Best move. [%eval 3.64] } 30. Qh8+
-{ [%eval 3.55] } 30... Kf7 { Best move. [%eval 3.92] } 31. Qh7+??
-{ (3.92 -> 0.00) Blunder. h4 was best. [%eval 0.00] (31. h4 Qd8 32. Qh7+ Kf6 33. Qh6 Qg8 34. h5 Kf7) }
-31... Kf6?? { Best move. Blunder. [%eval 3.89] } 1/2-1/2
+1. d4 { [%eval 0.19] } 1... Nf6 { [%eval 0.23] } 2. Bf4 { [%eval 0.23] } 2...
+d5 { [%eval 0.22] } 3. Nf3 { [%eval 0.17] } 3... Bg4 { [%eval 0.29] } 4. e3
+{ [%eval 0.18] } 4... g6?! { Inaccuracy. [%eval 0.66] } 5. h3 { [%eval 0.51] }
+5... Bxf3 { [%eval 0.50] } 6. Qxf3 { [%eval 0.49] } 6... Bg7 { [%eval 0.51] }
+7. Nd2 { [%eval 0.38] } 7... O-O { [%eval 0.36] } 8. Bd3 { [%eval 0.10] } 8...
+c5 { [%eval 0.13] } 9. c3 { [%eval 0.09] } 9... c4?!
+{ Inaccuracy. [%eval 0.63] } 10. Bc2 { [%eval 0.51] } 10... Qb6
+{ [%eval 0.81] } 11. Rb1 { [%eval 0.87] } 11... Nc6 { [%eval 1.01] } 12. O-O
+{ [%eval 0.98] } 12... Rac8 { [%eval 1.12] } 13. e4 { [%eval 0.70] } 13... dxe4
+{ [%eval 0.73] } 14. Nxe4 { [%eval 0.95] } 14... Nxe4 { [%eval 0.95] } 15. Bxe4
+{ [%eval 0.94] } 15... f5?? { Blunder. [%eval 3.11] } 16. Bxc6?
+{ Mistake. [%eval 1.10] } 16... Qxc6 { [%eval 1.25] } 17. Qe3 { [%eval 1.40] }
+17... e6 { [%eval 1.52] } 18. Rfe1 { [%eval 1.52] } 18... Rfe8 { [%eval 1.53] }
+19. Be5 { [%eval 1.14] } 19... Bxe5 { [%eval 1.04] } 20. Qxe5 { [%eval 1.07] }
+20... Rcd8 { [%eval 1.04] } 21. Qf4 { [%eval 1.24] } 21... a5 { [%eval 1.76] }
+22. Re2 { [%eval 1.51] } 22... Rd5 { [%eval 1.48] } 23. Rbe1 { [%eval 1.55] }
+23... a4 { [%eval 1.76] } 24. a3 { [%eval 1.63] } 24... Qb6 { [%eval 1.90] }
+25. Qg5 { [%eval 1.67] } 25... Kf7 { [%eval 2.17] } 26. Qh6 { [%eval 2.03] }
+26... Kf6?! { Inaccuracy. [%eval 3.57] } 27. Qxh7 { [%eval 3.65] } 27... Re7
+{ [%eval 3.92] } 28. Qh4+ { [%eval 4.22] } 28... Kf7 { [%eval 4.04] } 29. Qh7+
+{ [%eval 3.74] } 29... Kf6 { [%eval 4.04] } 30. Qh8+ { [%eval 3.80] } 30... Kf7
+{ [%eval 3.80] } 31. Qh7+?? { Blunder. [%eval 0.00] } 31... Kf6??
+{ Blunder. [%eval 3.96] } 1/2-1/2
 
 
 
@@ -170,81 +115,46 @@ d5 { [%eval 0.17] } 3. Nf3 { Best move. [%eval 0.21] } 3... Bg4
 [Variant "Standard"]
 [Termination "mate"]
 
-1. d4 { [%eval 0.22] } 1... Nf6 { [%eval 0.21] } 2. e4?!
-{ (0.21 -> -0.80) Inaccuracy. c4 was best. [%eval -0.80] (2. c4 e6 3. Nc3 d5 4. Nf3 Bb4 5. cxd5 exd5) }
-2... d6?!
-{ (-0.80 -> 0.57) Inaccuracy. Nxe4 was best. [%eval 0.57] (2... Nxe4 3. Nf3 g6) }
-3. e5?!
-{ (0.57 -> -0.71) Inaccuracy. Nc3 was best. [%eval -0.71] (3. Nc3 e5 4. dxe5 dxe5 5. Qxd8+ Kxd8 6. Nf3 Nc6) }
-3... dxe5 { Best move. [%eval -1.05] } 4. dxe5 { Best move. [%eval -1.19] }
-4... Qxd1+ { Best move. [%eval -1.03] } 5. Kxd1 { Best move. [%eval -1.26] }
-5... Ng4 { Best move. [%eval -1.33] } 6. Nf3?
-{ (-1.33 -> -3.23) Mistake. Ke1 was best. [%eval -3.23] (6. Ke1 Nxe5 7. Nc3 Nbc6 8. Nb5 Kd8 9. f4 Ng4) }
-6... Nxf2+ { Best move. [%eval -3.19] } 7. Ke2?!
-{ (-3.19 -> -4.21) Inaccuracy. Ke1 was best. [%eval -4.21] (7. Ke1 Nxh1 8. Nc3 Ng3 9. hxg3 Bd7 10. Nd5 Kd8) }
-7... Nxh1 { Best move. [%eval -4.20] } 8. Nc3 { [%eval -3.90] } 8... c6
-{ [%eval -3.69] } 9. b4 { [%eval -4.11] } 9... Bg4 { [%eval -4.37] } 10. b5
-{ [%eval -4.22] } 10... Nd7 { [%eval -4.13] } 11. Rb1 { [%eval -4.19] } 11...
-Nxe5 { Best move. [%eval -4.38] } 12. bxc6 { Best move. [%eval -4.60] } 12...
-bxc6 { Best move. [%eval -4.53] } 13. Bf4 { Best move. [%eval -4.63] } 13...
-Nc4 { [%eval -4.31] } 14. Rb4?!
-{ (-4.31 -> -5.36) Inaccuracy. Ke1 was best. [%eval -5.36] (14. Ke1 e5 15. Bxc4 exf4 16. Rb7 Be7 17. Ke2) }
-14... Nb6?!
-{ (-5.36 -> -4.40) Inaccuracy. e5 was best. [%eval -4.40] (14... e5 15. Rxc4 exf4 16. Rxf4 h5 17. Re4+ Be7) }
-15. Bc7 { Best move. [%eval -4.48] } 15... e6?!
-{ (-4.48 -> -2.86) Inaccuracy. Ng3+ was best. [%eval -2.86] (15... Ng3+ 16. Bxg3 h5 17. Ke1 e6 18. Rb3) }
-16. Rxg4 { Best move. [%eval -3.25] } 16... g6?!
-{ (-3.25 -> -1.91) Inaccuracy. h5 was best. [%eval -1.91] (16... h5 17. Rf4 Rc8 18. Bxb6 axb6 19. Rc4 Bd6 20. g3) }
-17. Ne5?!
-{ (-1.91 -> -3.37) Inaccuracy. Be5 was best. [%eval -3.37] (17. Be5 h5 18. Rh4 Rh7 19. Ke1 Be7 20. Rh3) }
-17... Bg7 { [%eval -2.94] } 18. Re4 { [%eval -3.51] } 18... O-O
-{ Best move. [%eval -3.65] } 19. Re3 { [%eval -3.98] } 19... Rac8
-{ Best move. [%eval -3.21] } 20. Bxb6 { Best move. [%eval -3.35] } 20... axb6
-{ Best move. [%eval -3.44] } 21. Nd7 { [%eval -3.66] } 21... Rfd8
-{ Best move. [%eval -3.78] } 22. Nxb6 { Best move. [%eval -3.71] } 22... Rc7
-{ [%eval -3.45] } 23. g3 { [%eval -4.01] } 23... Bd4
-{ Best move. [%eval -4.07] } 24. Rd3 { Best move. [%eval -3.85] } 24... Nf2
-{ Best move. [%eval -4.10] } 25. Nd1??
-{ (-4.10 -> -8.41) Blunder. Rxd4 was best. [%eval -8.41] (25. Rxd4 Rxd4 26. Kxf2 Rd2+ 27. Ke3 Rxc2 28. Kd3 Rf2) }
-25... Nxd3 { Best move. [%eval -8.01] } 26. cxd3 { [%eval -7.78] } 26... Bxb6
-{ Best move. [%eval -8.18] } 27. Nb2 { [%eval -8.52] } 27... Rcd7
-{ [%eval -7.96] } 28. Kf3 { [%eval -8.23] } 28... Rd5 { [%eval -7.71] } 29. Nc4
-{ [%eval -8.23] } 29... Bd4 { [%eval -8.34] } 30. a4 { [%eval -8.11] } 30...
-Rf5+ { [%eval -8.53] } 31. Kg2 { [%eval -8.61] } 31... Rf2+
-{ Best move. [%eval -8.96] } 32. Kg1 { Best move. [%eval -8.62] } 32... Rc2+
-{ [%eval -8.23] } 33. Ne3?!
-{ (-8.23 -> -9.54) Inaccuracy. Kh1 was best. [%eval -9.54] (33. Kh1 h5 34. a5 Rc1 35. Kg2 Ra1) }
-33... Bxe3+ { Best move. [%eval -9.65] } 34. Kh1 { Best move. [%eval -9.97] }
-34... Rc1 { [%eval -9.34] } 35. Kg2 { Best move. [%eval -9.28] } 35... Rxf1?!
-{ (-9.28 -> -7.97) Inaccuracy. Rc2+ was best. [%eval -7.97] (35... Rc2+ 36. Kf3 Bd4 37. Be2 Ra2) }
-36. Kxf1 { Best move. [%eval -7.84] } 36... Rxd3 { [%eval -7.87] } 37. Ke2
-{ [%eval -8.27] } 37... Rd2+ { [%eval -7.75] } 38. Kxe3
-{ Best move. [%eval -7.99] } 38... Rxh2?!
-{ (-7.99 -> -6.84) Inaccuracy. Rd5 was best. [%eval -6.84] (38... Rd5 39. a5 Rxa5 40. Kd3 Kg7 41. Kd4 Ra4+ 42. Kc5) }
-39. a5?!
-{ (-6.84 -> -7.75) Inaccuracy. Kd4 was best. [%eval -7.75] (39. Kd4 g5 40. Kc5 Rc2+ 41. Kd6) }
-39... Ra2 { Best move. [%eval -7.78] } 40. Kf4 { [%eval -8.56] } 40... Rxa5
-{ Best move. [%eval -8.45] } 41. Kg4 { [%eval -9.06] } 41... c5
-{ [%eval -8.55] } 42. Kf3 { [%eval -9.03] } 42... c4?!
-{ (-9.03 -> -7.74) Inaccuracy. Kg7 was best. [%eval -7.74] (42... Kg7 43. Kg2 Ra2+ 44. Kf3) }
-43. Ke2?!
-{ (-7.74 -> -9.09) Inaccuracy. Ke4 was best. [%eval -9.09] (43. Ke4 Ra7 44. Ke5) }
-43... Rc5 { [%eval -8.71] } 44. Ke3 { [%eval -9.25] } 44... Rc8
-{ [%eval -8.97] } 45. Kd2 { [%eval -9.20] } 45... c3+
-{ Best move. [%eval -9.27] } 46. Kc2 { Best move. [%eval -9.31] } 46... h5
-{ [%eval -8.57] } 47. Kc1 { [%eval -8.98] } 47... c2 { [%eval -9.34] } 48. Kd2
-$6
-{ (-9.34 -> -10.80) Inaccuracy. g4 was best. [%eval -10.80] (48. g4 h4 49. Kd2 c1=Q+ 50. Kd3 Qd1+ 51. Ke3) }
-48... c1=Q+ { Best move. [%eval -11.18] } 49. Ke2 { [%eval -11.18] } 49... Qa3
-$2
-{ (-11.18 -> -9.41) Mistake. Rc2+ was best. [%eval -9.41] (49... Rc2+ 50. Kf3 Kg7 51. Ke4 Qd2 52. Ke5 f6+ 53. Ke4) }
-50. Kf2??
-{ (-9.41 -> #-2) Miss. Blunder. g4 was best. [%eval #-2] (50. g4 Qb2+ 51. Kf3 Qd2 52. Kg3 Rc3+ 53. Kh4) }
-50... g5??
-{ (#-2 -> -9.39) Blunder. Rc2+ was best. [%eval -9.39] (50... Rc2+ 51. Kg1 Qc1#) }
-51. Kg2?? { Miss. Best move. Blunder. [%eval #-6] } 51... g4 { [%eval #-2] }
-52. Kh2 { Best move. [%eval #-2] } 52... Rc2+ { [%eval #-1] } 53. Kg1
-{ [%eval #-1] } 53... Qa1# { [%eval #0] } 0-1
+1. d4 { [%eval 0.19] } 1... Nf6 { [%eval 0.23] } 2. e4?
+{ Mistake. [%eval -0.72] } 2... d6?? { Blunder. [%eval 0.55] } 3. e5??
+{ Blunder. [%eval -0.81] } 3... dxe5 { [%eval -0.90] } 4. dxe5
+{ [%eval -1.07] } 4... Qxd1+ { [%eval -1.13] } 5. Kxd1 { [%eval -1.00] } 5...
+Ng4 { [%eval -1.31] } 6. Nf3? { Mistake. [%eval -3.54] } 6... Nxf2+
+{ [%eval -3.35] } 7. Ke2 { [%eval -4.19] } 7... Nxh1 { [%eval -3.86] } 8. Nc3
+{ [%eval -3.84] } 8... c6 { [%eval -3.55] } 9. b4 { [%eval -4.21] } 9... Bg4
+{ [%eval -4.30] } 10. b5 { [%eval -4.33] } 10... Nd7 { [%eval -4.44] } 11. Rb1
+{ [%eval -4.88] } 11... Nxe5 { [%eval -4.95] } 12. bxc6 { [%eval -4.54] } 12...
+bxc6 { [%eval -4.58] } 13. Bf4 { [%eval -4.59] } 13... Nc4 { [%eval -3.83] }
+14. Rb4 { [%eval -5.81] } 14... Nb6 { [%eval -4.71] } 15. Bc7 { [%eval -4.95] }
+15... e6 { [%eval -2.99] } 16. Rxg4 { [%eval -3.31] } 16... g6?!
+{ Inaccuracy. [%eval -2.14] } 17. Ne5?! { Inaccuracy. [%eval -3.37] } 17...
+Bg7 { [%eval -3.00] } 18. Re4 { [%eval -3.48] } 18... O-O { [%eval -3.13] } 19.
+Re3 { [%eval -3.78] } 19... Rac8 { [%eval -3.64] } 20. Bxb6 { [%eval -3.59] }
+20... axb6 { [%eval -3.47] } 21. Nd7 { [%eval -3.55] } 21... Rfd8
+{ [%eval -3.63] } 22. Nxb6 { [%eval -3.84] } 22... Rc7 { [%eval -2.97] } 23. g3
+{ [%eval -3.51] } 23... Bd4 { [%eval -3.57] } 24. Rd3 { [%eval -3.88] } 24...
+Nf2 { [%eval -3.85] } 25. Nd1 { [%eval -8.25] } 25... Nxd3 { [%eval -8.42] }
+26. cxd3 { [%eval -8.31] } 26... Bxb6 { [%eval -8.25] } 27. Nb2
+{ [%eval -8.49] } 27... Rcd7 { [%eval -7.98] } 28. Kf3 { [%eval -8.33] } 28...
+Rd5 { [%eval -8.24] } 29. Nc4 { [%eval -8.46] } 29... Bd4 { [%eval -8.00] } 30.
+a4 { [%eval -8.47] } 30... Rf5+ { [%eval -8.44] } 31. Kg2 { [%eval -8.48] }
+31... Rf2+ { [%eval -8.35] } 32. Kg1 { [%eval -8.33] } 32... Rc2+
+{ [%eval -8.52] } 33. Ne3 { [%eval -9.62] } 33... Bxe3+ { [%eval -9.67] } 34.
+Kh1 { [%eval -9.49] } 34... Rc1 { [%eval -9.13] } 35. Kg2 { [%eval -9.27] }
+35... Rxf1 { [%eval -8.13] } 36. Kxf1 { [%eval -7.91] } 36... Rxd3
+{ [%eval -8.13] } 37. Ke2 { [%eval -8.37] } 37... Rd2+ { [%eval -7.35] } 38.
+Kxe3 { [%eval -7.98] } 38... Rxh2 { [%eval -7.27] } 39. a5 { [%eval -7.84] }
+39... Ra2 { [%eval -7.90] } 40. Kf4 { [%eval -8.99] } 40... Rxa5
+{ [%eval -9.20] } 41. Kg4 { [%eval -9.03] } 41... c5 { [%eval -8.98] } 42. Kf3
+{ [%eval -8.98] } 42... c4 { [%eval -9.15] } 43. Ke2 { [%eval -9.34] } 43...
+Rc5 { [%eval -8.93] } 44. Ke3 { [%eval -9.53] } 44... Rc8 { [%eval -8.97] } 45.
+Kd2 { [%eval -9.22] } 45... c3+ { [%eval -9.35] } 46. Kc2 { [%eval -9.51] }
+46... h5 { [%eval -8.99] } 47. Kc1 { [%eval -9.32] } 47... c2 { [%eval -9.55] }
+48. Kd2 { [%eval -10.47] } 48... c1=Q+ { [%eval -10.94] } 49. Ke2
+{ [%eval #-8] } 49... Qa3 { [%eval -10.15] } 50. Kf2 { [%eval #-2] } 50... g5
+{ [%eval #-5] } 51. Kg2 { [%eval #-5] } 51... g4 { [%eval #-7] } 52. Kh2
+{ [%eval #-2] } 52... Rc2+ { [%eval #-1] } 53. Kg1 { [%eval #-1] } 53... Qa1#
+{ [%eval #0] } 0-1
 
 
 
@@ -260,32 +170,23 @@ $2
 [Variant "Standard"]
 [Termination "?"]
 
-1. d4 { [%eval 0.22] } 1... Nf6 { [%eval 0.21] } 2. c4
-{ Best move. [%eval 0.24] } 2... d6 { [%eval 0.51] } 3. Nc3 { [%eval 0.38] }
-3... g6 { [%eval 0.60] } 4. e4 { [%eval 0.58] } 4... Bg7
-{ Best move. [%eval 0.49] } 5. d5 { [%eval 0.08] } 5... O-O { [%eval 0.11] } 6.
-Bd3 { [%eval 0.21] } 6... c6 { [%eval 0.23] } 7. Nge2 { [%eval 0.13] } 7... Na6
-{ [%eval 0.29] } 8. a3 { [%eval -0.05] } 8... Nc5 { [%eval 0.04] } 9. Bc2
-{ Best move. [%eval 0.12] } 9... cxd5 { [%eval 0.40] } 10. cxd5
-{ [%eval 0.16] } 10... b6 { [%eval 0.57] } 11. h3 { [%eval 0.26] } 11... Bb7
-{ [%eval 0.70] } 12. O-O { [%eval 0.29] } 12... e6 { Best move. [%eval 0.42] }
-13. b4?!
-{ (0.42 -> -0.95) Inaccuracy. Bg5 was best. [%eval -0.95] (13. Bg5 exd5 14. exd5 a6 15. Qd2 Re8 16. Ng3 b5) }
-13... Nfxe4 { [%eval -0.22] } 14. bxc5?!
-{ (-0.22 -> -1.54) Inaccuracy. Bb2 was best. [%eval -1.54] (14. Bb2 Nxc3 15. Bxc3 Bxc3 16. Nxc3 Qf6 17. Ne2 Na6) }
-14... Nxc3 { Best move. [%eval -1.71] } 15. Nxc3 { Best move. [%eval -2.40] }
-15... Bxc3 { Best move. [%eval -2.46] } 16. Rb1 { [%eval -2.83] } 16... dxc5
-{ [%eval -2.36] } 17. dxe6 { Best move. [%eval -2.34] } 17... Qe7?!
-{ (-2.34 -> -1.31) Inaccuracy. fxe6 was best. [%eval -1.31] (17... fxe6 18. Qg4 Qf6 19. Bh6 Rf7 20. h4 Ba6 21. h5) }
-18. exf7+ { Best move. [%eval -1.19] } 18... Qxf7 { Best move. [%eval -1.05] }
-19. Bb3?!
-{ (-1.05 -> -2.20) Inaccuracy. Bh6 was best. [%eval -2.20] (19. Bh6 Rfd8 20. Qg4 Bd4 21. Be3 Bc8 22. Qe4) }
-19... Bd4??
-{ (-2.20 -> 4.66) Blunder. c4 was best. [%eval 4.66] (19... c4 20. Ba2 Be4 21. Bh6 Bxb1 22. Qxb1) }
-20. Bxf7+ { Only move. Best move. [%eval 4.61] } 20... Rxf7
-{ Best move. [%eval 3.98] } 21. Bb2 { [%eval 3.88] } 21... Rd8?!
-{ (3.88 -> 5.30) Inaccuracy. Ba6 was best. [%eval 5.30] (21... Ba6 22. Qb3 Rf8 23. Ba1) }
-22. Bxd4 { Best move. [%eval 5.54] } *
+1. d4 { [%eval 0.19] } 1... Nf6 { [%eval 0.23] } 2. c4 { [%eval 0.27] } 2... d6
+{ [%eval 0.60] } 3. Nc3 { [%eval 0.33] } 3... g6 { [%eval 0.52] } 4. e4
+{ [%eval 0.53] } 4... Bg7 { [%eval 0.52] } 5. d5 { [%eval 0.16] } 5... O-O
+{ [%eval 0.11] } 6. Bd3 { [%eval 0.11] } 6... c6 { [%eval 0.25] } 7. Nge2
+{ [%eval 0.12] } 7... Na6 { [%eval 0.22] } 8. a3 { [%eval 0.09] } 8... Nc5
+{ [%eval 0.21] } 9. Bc2 { [%eval 0.09] } 9... cxd5 { [%eval 0.23] } 10. cxd5
+{ [%eval 0.10] } 10... b6?! { Inaccuracy. [%eval 0.48] } 11. h3
+{ [%eval 0.23] } 11... Bb7 { [%eval 0.60] } 12. O-O { [%eval 0.34] } 12... e6
+{ [%eval 0.42] } 13. b4? { Mistake. [%eval -0.55] } 13... Nfxe4?!
+{ Inaccuracy. [%eval -0.08] } 14. bxc5?? { Blunder. [%eval -2.01] } 14... Nxc3
+{ [%eval -2.46] } 15. Nxc3 { [%eval -2.47] } 15... Bxc3 { [%eval -2.49] } 16.
+Rb1 { [%eval -2.71] } 16... dxc5 { [%eval -2.29] } 17. dxe6 { [%eval -2.23] }
+17... Qe7? { Mistake. [%eval -1.08] } 18. exf7+ { [%eval -1.03] } 18... Qxf7
+{ [%eval -1.29] } 19. Bb3 { [%eval -1.49] } 19... Bd4??
+{ Blunder. [%eval 4.86] } 20. Bxf7+ { [%eval 4.58] } 20... Rxf7
+{ [%eval 4.54] } 21. Bb2 { [%eval 3.76] } 21... Rd8 { [%eval 4.93] } 22. Bxd4
+{ [%eval 5.24] } *
 
 
 
@@ -306,43 +207,30 @@ Bd3 { [%eval 0.21] } 6... c6 { [%eval 0.23] } 7. Nge2 { [%eval 0.13] } 7... Na6
 [Termination "Unknown"]
 [Annotator "lichess.org"]
 
-1. d4 { [%eval 0.22] } 1... d5 { Best move. [%eval 0.28] } 2. Bf4
-{ [%eval 0.13] } 2... Nc6 { [%eval 0.39] } 3. Nf3 { [%eval 0.26] } 3... e6
-{ [%eval 0.45] } 4. c3 { [%eval 0.13] } 4... Bd6 { Best move. [%eval 0.38] } 5.
-Bxd6 { [%eval -0.11] } 5... Qxd6 { [%eval 0.12] } 6. e3
-{ Best move. [%eval 0.10] } 6... Nf6 { Best move. [%eval 0.01] } 7. Bd3
-{ [%eval -0.08] } 7... Ne4 { [%eval 0.47] } 8. Nbd2 { [%eval 0.20] } 8... e5?
-$4
-{ (0.20 -> 2.34) Mistake. Nxd2 was best. [%eval 2.34] (8... Nxd2 9. Qxd2 e5 10. e4 exd4 11. Nxd4 Nxd4 12. cxd4) }
-( 8... Nxd2 9. Qxd2 e5 10. dxe5 Nxe5 11. Nxe5 Qxe5 12. O-O-O Be6 13. Bc2 g6 14.
-h4 ) 9. Nxe4 { Best move. [%eval 2.42] } 9... dxe4 { Best move. [%eval 2.56] }
-10. Bxe4 { Only move. Best move. [%eval 2.35] } 10... Bg4 { [%eval 2.65] } 11.
-h3 { Best move. [%eval 2.70] } 11... Bxf3 { [%eval 2.54] } 12. Qxf3
-{ Best move. [%eval 2.58] } 12... O-O { Best move. [%eval 2.60] } 13. Bxc6
-{ [%eval 2.59] } 13... bxc6 { Best move. [%eval 2.54] } 14. O-O
-{ [%eval 2.30] } 14... exd4 { [%eval 2.63] } 15. Rad1?!
-{ (2.63 -> 1.38) Inaccuracy. cxd4 was best. [%eval 1.38] (15. cxd4 c5 16. Rfd1 cxd4 17. Rxd4 Qa6 18. b3 c5) }
-( 15. cxd4 c5 16. Rfd1 Rad8 17. b3 g6 18. Rac1 cxd4 19. Rxd4 Qa3 20. Rxd8 Qxc1+
-) 15... Rae8?
-{ (1.38 -> 3.22) Mistake. d3 was best. [%eval 3.22] (15... d3 16. Rd2 c5 17. Qe4 Qa6 18. b3) }
-( 15... d3 16. Rd2 ) 16. Rfe1???
-{ (3.22 -> 1.06) Mistake. Rxd4 was best. [%eval 1.06] (16. Rxd4 Qe6 17. Ra4 Rd8 18. Rxa7 Qe5 19. a4) }
-( 16. Rxd4 Qg6 17. Ra4 Qc2 18. Qxc6 Qxb2 19. Rxa7 Qd2 20. Ra5 Qd6 21. Qxd6 cxd6
-) 16... c5 { [%eval 1.79] } 17. exd4?!
-{ (1.79 -> 0.29) Inaccuracy. cxd4 was best. [%eval 0.29] (17. cxd4 Qa6 18. a3 Rb8 19. Rd2 cxd4 20. exd4) }
-17... Rxe1+ { Best move. [%eval 0.17] } 18. Rxe1 { Best move. [%eval 0.22] }
-18... cxd4 { Best move. [%eval 0.34] } 19. Rd1 { [%eval 0.07] } 19... c5
-{ Best move. [%eval 0.24] } 20. cxd4 { [%eval 0.00] } 20... cxd4
-{ Best move. [%eval -0.06] } 21. Qa3 { [%eval -0.15] } 21... Qb6
-{ [%eval -0.11] } 22. Rd2 { Best move. [%eval -0.11] } 22... Re8
-{ Best move. [%eval -0.06] } 23. Qa4??
-{ (-0.06 -> -4.19) Blunder. Qd3 was best. [%eval -4.19] (23. Qd3 Qc7 24. Rd1 Rd8 25. Rd2 h5 26. g3) }
-( 23. Qf3 g6 24. Qd1 Rd8 25. b3 Qc5 26. Rd3 Kg7 27. Kh2 Qd6+ 28. g3 h6 ) 23...
-Qb8??
-{ (-4.19 -> 0.09) Blunder. Re1+ was best. [%eval 0.09] (23... Re1+ 24. Kh2 Qd6+ 25. g3 Qd5 26. g4 Rh1+ 27. Kg3) }
-( 23... Re1+ 24. Kh2 Qb8+ 25. g3 Qa8 26. Qe8+ Rxe8 27. Rxd4 h5 28. Rd1 Qf3 29.
-Rf1 ) 24. Qxd4??
-{ (0.09 -> #-1) Blunder. Qd1 was best. [%eval #-1] (24. Qd1 g6 25. a4 h5 26. Rxd4 Qxb2 27. Rd5 Re4) }
-( 24. Qd1 g6 25. Rxd4 Qxb2 26. Rd2 Qc3 27. g3 Kg7 28. Kg2 Re6 29. Rd5 Qb2 )
-24... Re1# { Best move. [%eval #0] } 0-1
+1. d4 { [%eval 0.19] } 1... d5 { [%eval 0.18] } 2. Bf4 { [%eval -0.05] } 2...
+Nc6?! { Inaccuracy. [%eval 0.33] } 3. Nf3 { [%eval 0.19] } 3... e6
+{ [%eval 0.49] } 4. c3 { [%eval 0.43] } 4... Bd6 { [%eval 0.45] } 5. Bxd6?!
+{ Inaccuracy. [%eval -0.07] } 5... Qxd6 { [%eval 0.08] } 6. e3 { [%eval 0.17] }
+6... Nf6 { [%eval 0.20] } 7. Bd3 { [%eval -0.16] } 7... Ne4?
+{ Mistake. [%eval 0.57] } 8. Nbd2?! { Inaccuracy. [%eval 0.17] } 8... e5??
+{ Blunder. [%eval 2.49] } ( 8... Nxd2 9. Qxd2 e5 10. dxe5 Nxe5 11. Nxe5 Qxe5
+12. O-O-O Be6 13. Bc2 g6 14. h4 ) 9. Nxe4 { [%eval 2.42] } 9... dxe4
+{ [%eval 2.42] } 10. Bxe4 { [%eval 2.35] } 10... Bg4 { [%eval 2.91] } 11. h3
+{ [%eval 2.84] } 11... Bxf3 { [%eval 2.66] } 12. Qxf3 { [%eval 2.76] } 12...
+O-O { [%eval 2.86] } 13. Bxc6 { [%eval 2.35] } 13... bxc6 { [%eval 2.57] } 14.
+O-O { [%eval 2.23] } 14... exd4 { [%eval 2.47] } 15. Rad1?!
+{ Inaccuracy. [%eval 1.36] } ( 15. cxd4 c5 16. Rfd1 Rad8 17. b3 g6 18. Rac1
+cxd4 19. Rxd4 Qa3 20. Rxd8 Qxc1+ ) 15... Rae8? { Mistake. [%eval 3.03] } (
+15... d3 16. Rd2 ) 16. Rfe1?? { Blunder. [%eval 0.81] } ( 16. Rxd4 Qg6 17. Ra4
+Qc2 18. Qxc6 Qxb2 19. Rxa7 Qd2 20. Ra5 Qd6 21. Qxd6 cxd6 ) 16... c5
+{ [%eval 0.69] } 17. exd4?! { Inaccuracy. [%eval 0.23] } 17... Rxe1+
+{ [%eval 0.26] } 18. Rxe1 { [%eval 0.29] } 18... cxd4 { [%eval 0.29] } 19. Rd1
+{ [%eval 0.15] } 19... c5 { [%eval 0.19] } 20. cxd4 { [%eval -0.07] } 20...
+cxd4 { [%eval -0.04] } 21. Qa3 { [%eval -0.18] } 21... Qb6 { [%eval -0.05] }
+22. Rd2 { [%eval -0.08] } 22... Re8 { [%eval -0.03] } 23. Qa4??
+{ Blunder. [%eval -5.34] } ( 23. Qf3 g6 24. Qd1 Rd8 25. b3 Qc5 26. Rd3 Kg7 27.
+Kh2 Qd6+ 28. g3 h6 ) 23... Qb8?? { Blunder. [%eval 0.42] } ( 23... Re1+ 24.
+Kh2 Qb8+ 25. g3 Qa8 26. Qe8+ Rxe8 27. Rxd4 h5 28. Rd1 Qf3 29. Rf1 ) 24. Qxd4??
+{ Blunder. [%eval #-1] } ( 24. Qd1 g6 25. Rxd4 Qxb2 26. Rd2 Qc3 27. g3 Kg7 28.
+Kg2 Re6 29. Rd5 Qb2 ) 24... Re1# { [%eval #0] } 0-1
 
