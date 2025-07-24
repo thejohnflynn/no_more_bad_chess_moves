@@ -120,6 +120,7 @@ class ChessModel:
         for rank, info in enumerate(infos, start=1):
             pv = info.get("pv", [])
             move = self.board.san(pv[0])
+            pv = pv[:10]  # Truncate for readability
             pv = self.board.variation_san(pv)
             score = info["score"].white().score(mate_score=10000) / 100
             diff = score - best_eval
@@ -196,7 +197,7 @@ class ChessView:
         self.highlight_squares = []
 
         self.root.title("no more bad chess moves")
-        self.root.geometry("1600x900")
+        self.root.geometry("1200x960")
         self.root.resizable(True, True)
 
         btn_frame = tk.Frame(root)
